@@ -1,7 +1,15 @@
+
 export enum UserRole {
   GUEST = 'GUEST',
   USER = 'USER',
   ADMIN = 'ADMIN'
+}
+
+export interface WeeklySchedule {
+  day: string; // 'mon', 'tue', ...
+  isWorkDay: boolean;
+  start: string; // "09:00"
+  end: string;   // "18:00"
 }
 
 export interface Trainer {
@@ -12,8 +20,15 @@ export interface Trainer {
   available: boolean;
   rating: number;
   gymName: string; // Associated Gym
-  currentZone?: string; // Where they are currently in the gym (e.g., "Floor 2", "Counter")
-  eta?: number; // minutes (walking time inside gym)
+  
+  // Schedule
+  weeklySchedule?: WeeklySchedule[];
+  
+  // Deprecated / Optional for backwards compatibility with mocks
+  currentZone?: string; 
+  eta?: number; 
+  shiftStart?: string; 
+  shiftEnd?: string; 
 }
 
 export interface ExerciseCategory {
@@ -23,15 +38,24 @@ export interface ExerciseCategory {
   icon: string; // Lucid icon name
 }
 
+// For Admin CMS
+export interface GymServiceItem {
+  id: string;
+  category: 'BODY' | 'MACHINE' | 'CARE';
+  name: string;
+  description: string;
+  isActive: boolean;
+}
+
 export interface SpotSession {
   id: string;
   categoryId: string;
-  duration: number; // changed from literal 20 | 30 to number for flexibility, defaulting to 30 logic elsewhere
+  duration: number; 
   trainerId: string;
   timeSlot: string;
   status: 'booked' | 'completed' | 'cancelled';
   gymId: string;
-  gymZone: string; // e.g., "Squat Rack 3"
+  gymZone: string; 
   price: number;
 }
 

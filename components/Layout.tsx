@@ -23,10 +23,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, role, onLogout }) => {
         else if (to) navigate(to);
         setIsMenuOpen(false);
       }}
-      className={`flex items-center space-x-2 px-4 py-3 rounded-lg w-full transition-colors ${
+      className={`flex items-center space-x-3 px-4 py-4 rounded-xl w-full transition-all ${
         to && location.pathname === to 
-          ? 'bg-brand-50 text-brand-700 font-medium' 
-          : 'text-gray-600 hover:bg-gray-50'
+          ? 'bg-neon-300/10 text-neon-300 font-bold border border-neon-300/20' 
+          : 'text-slate-400 hover:bg-slate-800 hover:text-white'
       }`}
     >
       <Icon size={20} />
@@ -35,51 +35,56 @@ export const Layout: React.FC<LayoutProps> = ({ children, role, onLogout }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Navbar */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div className="min-h-screen bg-slate-950 text-slate-50 flex flex-col font-sans selection:bg-neon-300 selection:text-slate-900">
+      {/* Navbar - Glassmorphism */}
+      <header className="fixed top-0 w-full z-50 transition-all duration-300 bg-slate-950/70 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-              <div className="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white mr-2">
-                <Dumbbell size={20} />
+            {/* Logo */}
+            <div className="flex items-center cursor-pointer group" onClick={() => navigate('/')}>
+              <div className="w-8 h-8 bg-gradient-to-br from-neon-300 to-neon-500 rounded-lg flex items-center justify-center text-slate-900 mr-2 shadow-[0_0_15px_rgba(190,242,100,0.3)] group-hover:shadow-[0_0_25px_rgba(190,242,100,0.5)] transition-shadow">
+                <Dumbbell size={20} className="transform -rotate-12" />
               </div>
-              <span className="font-bold text-xl text-gray-900 tracking-tight">SPOT <span className="text-brand-600 font-light">Fitness</span></span>
+              <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-neon-300 transition-colors">
+                SPOT <span className="text-neon-300 font-light opacity-80">Fitness</span>
+              </span>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-6">
               {role === UserRole.GUEST && (
                 <>
-                  <button onClick={() => navigate('/trainer-promo')} className="text-gray-600 hover:text-brand-600 font-medium px-3 py-2 flex items-center">
-                     <UserCheck size={16} className="mr-1" /> 트레이너 지원
+                  <button onClick={() => navigate('/trainer-promo')} className="text-slate-400 hover:text-neon-300 font-medium text-sm transition-colors flex items-center">
+                     <UserCheck size={16} className="mr-1.5" /> 트레이너 지원
                   </button>
-                  <button onClick={() => navigate('/partner')} className="text-gray-600 hover:text-brand-600 font-medium px-3 py-2 flex items-center">
-                     <Briefcase size={16} className="mr-1" /> 가맹점 입점문의
+                  <button onClick={() => navigate('/partner')} className="text-slate-400 hover:text-neon-300 font-medium text-sm transition-colors flex items-center">
+                     <Briefcase size={16} className="mr-1.5" /> 가맹점 입점문의
                   </button>
-                  <button onClick={() => navigate('/login')} className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg font-bold transition-colors">
+                  <button onClick={() => navigate('/login')} className="bg-slate-800 hover:bg-slate-700 text-white border border-white/10 px-5 py-2 rounded-full font-bold transition-all hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] text-sm">
                     로그인
                   </button>
                 </>
               )}
               {role === UserRole.USER && (
-                 <div className="flex items-center space-x-4">
-                   <span className="text-sm text-gray-500">회원님 환영합니다</span>
-                   <button onClick={() => { onLogout(); navigate('/'); }} className="text-gray-500 hover:text-red-500 px-3 py-2 text-sm font-medium">로그아웃</button>
+                 <div className="flex items-center space-x-6">
+                   <span className="text-sm text-slate-400">
+                     <span className="text-neon-300 font-bold">회원님</span>, 오늘도 득근하세요!
+                   </span>
+                   <button onClick={() => { onLogout(); navigate('/'); }} className="text-slate-500 hover:text-red-400 text-sm font-medium transition-colors">로그아웃</button>
                  </div>
               )}
                {role === UserRole.ADMIN && (
-                 <div className="flex items-center space-x-4">
-                   <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold">ADMIN MODE</span>
-                   <button onClick={() => navigate('/admin')} className="text-gray-900 font-medium hover:text-brand-600">대시보드</button>
-                   <button onClick={() => { onLogout(); navigate('/'); }} className="text-gray-500 hover:text-red-500 px-3 py-2 text-sm font-medium">로그아웃</button>
+                 <div className="flex items-center space-x-6">
+                   <span className="bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-xs font-bold tracking-wider">ADMIN MODE</span>
+                   <button onClick={() => navigate('/admin')} className="text-slate-300 font-medium hover:text-neon-300 transition-colors">대시보드</button>
+                   <button onClick={() => { onLogout(); navigate('/'); }} className="text-slate-500 hover:text-red-400 text-sm font-medium transition-colors">로그아웃</button>
                  </div>
               )}
             </div>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-600 p-2">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-300 p-2 hover:text-white transition-colors">
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
@@ -88,7 +93,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, role, onLogout }) => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-b border-gray-200 px-4 py-2 space-y-1">
+          <div className="md:hidden bg-slate-900/95 backdrop-blur-xl border-b border-white/5 px-4 py-4 space-y-2 absolute w-full left-0 shadow-2xl">
             {role === UserRole.GUEST && (
               <>
                  <NavItem to="/" icon={Home} label="홈" />
@@ -113,16 +118,20 @@ export const Layout: React.FC<LayoutProps> = ({ children, role, onLogout }) => {
         )}
       </header>
 
+      {/* Main Content Spacer for Fixed Header */}
+      <div className="h-16"></div>
+
       {/* Main Content */}
-      <main className="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-grow w-full mx-auto">
         {children}
       </main>
 
       {/* Footer */}
       {!isLanding && (
-        <footer className="bg-white border-t border-gray-200 mt-auto safe-area-bottom">
-          <div className="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
-            &copy; 2025 Spot Fitness Care. All rights reserved.
+        <footer className="bg-slate-950 border-t border-white/5 mt-auto safe-area-bottom">
+          <div className="max-w-7xl mx-auto px-4 py-8 text-center text-xs text-slate-600">
+            <p className="mb-2 font-bold text-slate-500">SPOT FITNESS CARE</p>
+            &copy; 2025 All rights reserved.
           </div>
         </footer>
       )}
