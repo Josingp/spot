@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, ChevronRight, Activity, Brain, Clock, Check, Navigation, User, Monitor, AlertCircle, LayoutGrid, Dumbbell, HeartPulse, Wallet, CreditCard, X, ArrowLeft, Loader2 } from 'lucide-react';
+import { Search, MapPin, ChevronRight, Activity, Brain, Clock, Check, Navigation, User, Monitor, AlertCircle, LayoutGrid, Dumbbell, HeartPulse, Wallet, CreditCard, X, ArrowLeft, Loader2, Nfc, Siren } from 'lucide-react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getWorkoutRecommendation, Recommendation } from '../services/geminiService';
 import { Trainer, GymServiceItem } from '../types';
 import { DataStore } from '../utils/dataStore';
 
-type Step = 'gym_check' | 'home' | 'ai_chat' | 'location_input' | 'scanning' | 'booking_list' | 'booking_confirm' | 'wallet_charge';
+type Step = 'gym_check' | 'home' | 'ai_chat' | 'location_input' | 'scanning' | 'booking_list' | 'booking_confirm' | 'wallet_charge' | 'nfc_confirm';
 
 export const UserApp: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  
   const [step, setStep] = useState<Step>('gym_check');
   const [currentGym, setCurrentGym] = useState<string | null>(null);
   const [geoError, setGeoError] = useState<string | null>(null);
   const [myLocationInGym, setMyLocationInGym] = useState('');
   const [walletBalance, setWalletBalance] = useState(0); 
   const [userName, setUserName] = useState('회원');
+  
+  // NFC Specific State
+  const [nfcLocation, setNfcLocation] = useState<string | null>(null);
   
   // Dynamic Data from DataStore (Admin Customization)
   const [trainers, setTrainers] = useState<Trainer[]>([]);
@@ -38,9 +45,27 @@ export const UserApp: React.FC = () => {
     setTrainers(DataStore.getTrainers());
     setServices(DataStore.getServices());
     const session = DataStore.getSession();
-    if (session && session.name) setUserName(session.name);
+    if (session && session.name) {
+      setUserName(session.name);
+      setWalletBalance(session.balance || 25000); // Simulate pre-loaded balance from Kiosk
+    }
 
-    // 2. Real Geolocation
+    // 2. CHECK FOR NFC TAG ENTRY
+    const nfcLoc = searchParams.get('nfc_location');
+    const nfcGym = searchParams.get('gym_id');
+
+    if (nfcLoc) {
+        // Direct NFC Mode
+        console.log("Entered via NFC Tag:", nfcLoc);
+        setNfcLocation(nfcLoc);
+        setMyLocationInGym(nfcLoc); // Auto-fill location
+        setCurrentGym(nfcGym || '스포애니 강남점');
+        setSelectedCategory('기구 사용법 티칭'); // Default category for NFC
+        setStep('nfc_confirm'); // Skip to special NFC View
+        return;
+    }
+
+    // 3. Normal Geolocation (Only if not NFC)
     if (step === 'gym_check') {
       if (!navigator.geolocation) {
         setGeoError("Geolocation is not supported by this browser.");
@@ -49,17 +74,14 @@ export const UserApp: React.FC = () => {
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // In a real app, we would match position.coords.latitude/longitude to a database of gyms.
-          // For this demo, we simulate a successful match after finding coordinates.
           console.log("Found location:", position.coords);
           setTimeout(() => {
-            setCurrentGym('스포애니 강남점'); // Simulated Match
+            setCurrentGym('스포애니 강남점');
             setStep('home');
           }, 1500);
         },
         (error) => {
           setGeoError("위치 정보를 가져올 수 없습니다. GPS를 켜주세요.");
-          // Fallback for demo if blocked
           setTimeout(() => {
             setCurrentGym('스포애니 강남점 (GPS 미수신)');
             setStep('home');
@@ -68,7 +90,7 @@ export const UserApp: React.FC = () => {
         { timeout: 10000, enableHighAccuracy: true }
       );
     }
-  }, [step]);
+  }, [step, searchParams]);
 
   const handleStartBooking = (categoryName: string, detail?: string) => {
     setSelectedCategory(categoryName);
@@ -116,6 +138,71 @@ export const UserApp: React.FC = () => {
       }
     }
   };
+
+  // --- NFC Special View ---
+  const NfcConfirmView = () => (
+    <div className="flex flex-col h-screen bg-slate-950 p-6 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute top-0 left-0 w-full h-full z-0">
+             <div className="absolute top-[-10%] right-[-10%] w-[400px] h-[400px] bg-red-600/20 rounded-full blur-[100px] animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 flex flex-col h-full">
+             <div className="flex items-center space-x-2 text-red-500 mb-8 animate-fade-in">
+                 <Siren size={24} className="animate-pulse"/>
+                 <span className="font-bold uppercase tracking-wider text-sm">NFC Emergency Call</span>
+             </div>
+
+             <div className="flex-1 flex flex-col justify-center">
+                 <h1 className="text-3xl font-bold text-white mb-2">
+                    <span className="text-neon-400">{userName}</span>님,
+                 </h1>
+                 <h2 className="text-4xl font-black text-white mb-10 leading-tight">
+                    <span className="bg-red-600 px-2 text-white inline-block transform -skew-x-12">{nfcLocation}</span> 으로<br/>
+                    트레이너를 부를까요?
+                 </h2>
+
+                 <div className="bg-slate-900/80 border border-white/10 p-6 rounded-2xl mb-10 backdrop-blur-md">
+                     <div className="flex justify-between items-center mb-4">
+                        <span className="text-slate-400">내 크레딧 잔액</span>
+                        <span className="font-bold text-neon-400 text-xl">{walletBalance.toLocaleString()} P</span>
+                     </div>
+                     <div className="h-px bg-white/10 w-full mb-4"></div>
+                     <div className="flex justify-between items-center">
+                        <span className="text-slate-400">차감 예정</span>
+                        <span className="font-bold text-white">- 25,000 P</span>
+                     </div>
+                 </div>
+
+                 <button 
+                    onClick={() => {
+                        // Auto-select first available trainer for NFC speed
+                        const availableTrainer = trainers.find(t => t.available) || trainers[0];
+                        setSelectedTrainer(availableTrainer);
+                        handleBookingPayment();
+                    }}
+                    className="w-full bg-red-600 text-white py-6 rounded-2xl font-black text-2xl shadow-[0_0_40px_rgba(220,38,38,0.4)] hover:bg-red-500 transition-all active:scale-95 flex items-center justify-center group"
+                 >
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-white/30">
+                        <Nfc size={24} />
+                    </div>
+                    지금 호출하기
+                 </button>
+                 
+                 <button 
+                    onClick={() => {
+                        setStep('home');
+                        setNfcLocation(null);
+                        setMyLocationInGym('');
+                    }}
+                    className="mt-6 text-slate-500 text-sm font-medium underline text-center"
+                 >
+                    아니요, 메인 화면으로 갈게요
+                 </button>
+             </div>
+        </div>
+    </div>
+  );
 
   // --- Components ---
 
@@ -568,6 +655,7 @@ export const UserApp: React.FC = () => {
           setAiQuery('');
           setAiRecommendation(null);
           setMyLocationInGym('');
+          setNfcLocation(null);
         }}
         className="mt-10 px-12 py-4 bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-700 border border-white/10 transition-colors w-full max-w-sm"
       >
@@ -576,9 +664,13 @@ export const UserApp: React.FC = () => {
     </div>
   );
 
+  // Main Render
   return (
     <div className="pb-20 min-h-screen">
       {isPaymentProcessing && <PaymentModal />}
+      
+      {/* View Routing */}
+      {step === 'nfc_confirm' && <NfcConfirmView />} 
       {step === 'gym_check' && <GymCheckView />}
       {step === 'home' && <HomeView />}
       {step === 'wallet_charge' && <WalletChargeView />}

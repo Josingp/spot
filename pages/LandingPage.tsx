@@ -1,88 +1,163 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target } from 'lucide-react';
+import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target, Tablet, Nfc, Smartphone, CreditCard, UserPlus, Clock } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto-slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+    }, 6000); // 6 seconds per slide
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="flex flex-col bg-slate-950 text-slate-50 overflow-hidden">
       
-      {/* Hero Section */}
-      <section className="relative pt-16 pb-24 lg:pt-32 lg:pb-32 px-4 sm:px-6 lg:px-8">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-neon-500/20 rounded-full blur-[120px] animate-pulse-slow"></div>
-          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/20 rounded-full blur-[120px]"></div>
+      {/* Hero Section (Slider) */}
+      <section className="relative h-[850px] lg:h-[800px] flex items-center overflow-hidden">
+        {/* Background Gradients (Common) */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
+          <div className={`absolute transition-all duration-1000 ${currentSlide === 0 ? 'top-[-10%] left-[-10%] bg-blue-600/20' : 'top-[-10%] right-[-10%] bg-neon-500/20'} w-[60%] h-[60%] rounded-full blur-[120px] animate-pulse-slow`}></div>
+          <div className={`absolute transition-all duration-1000 ${currentSlide === 0 ? 'bottom-[-10%] right-[-10%] bg-neon-500/20' : 'bottom-[-10%] left-[-10%] bg-purple-600/20'} w-[60%] h-[60%] rounded-full blur-[120px]`}></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
-          <div className="md:w-1/2 space-y-8 text-center md:text-left">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-white/10 backdrop-blur-sm text-neon-300 text-sm font-bold mb-2 shadow-lg">
-              <Zap size={14} className="mr-2 fill-neon-300" />
-              피트니스의 넷플릭스, SPOT
+        {/* SLIDE 1: 30-Minute Concept */}
+        <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out flex items-center ${currentSlide === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row items-center justify-between">
+              <div className="md:w-1/2 space-y-8 text-center md:text-left pt-20 md:pt-0">
+                <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-sm font-bold mb-2 shadow-lg animate-fade-in">
+                  <Clock size={14} className="mr-2" />
+                  Time Efficiency Revolution
+                </div>
+                <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-[1.1] tracking-tight">
+                  원하는 순간,<br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-neon-300 text-glow">
+                    딱 30분만.
+                  </span>
+                </h1>
+                <p className="text-lg text-slate-400 max-w-lg mx-auto md:mx-0 leading-relaxed font-light">
+                  부담스러운 1시간 PT는 그만.<br/>
+                  내가 필요한 운동만, 합리적인 포인트 레슨으로 해결하세요.<br/>
+                  <strong className="text-white">25,000원</strong>으로 시작하는 전문가의 코칭.
+                </p>
+                <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4 justify-center md:justify-start">
+                  <button 
+                    onClick={() => navigate('/user')}
+                    className="px-8 py-4 bg-blue-500 text-white rounded-2xl font-bold text-lg shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:bg-blue-400 transition-all flex items-center justify-center hover:scale-105 transform"
+                  >
+                    지금 시작하기 <ArrowRight className="ml-2" size={20} />
+                  </button>
+                </div>
+              </div>
+              
+              <div className="md:w-1/2 mt-16 md:mt-0 relative flex justify-center">
+                 <div className="relative z-10">
+                     {/* Visual for Slide 1 */}
+                     <div className="glass-card p-8 rounded-[2.5rem] shadow-2xl max-w-sm mx-auto border border-blue-400/20 bg-gradient-to-br from-slate-900/80 to-slate-800/80">
+                        <div className="flex justify-between items-center mb-8 border-b border-white/5 pb-4">
+                           <div className="text-slate-400 text-sm font-bold uppercase">Classic PT</div>
+                           <div className="text-slate-400 text-sm font-bold uppercase text-neon-400">SPOT Care</div>
+                        </div>
+                        <div className="space-y-6">
+                           <div className="flex items-center justify-between">
+                               <div className="w-16 h-16 rounded-full bg-slate-800 border border-white/5 flex items-center justify-center grayscale opacity-50">
+                                  <Clock size={24}/>
+                               </div>
+                               <div className="h-1 flex-1 mx-4 bg-slate-700 rounded-full relative overflow-hidden">
+                                  <div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-slate-600 to-slate-500"></div>
+                               </div>
+                               <div className="w-16 h-16 rounded-full bg-neon-500/20 border border-neon-500 text-neon-400 flex items-center justify-center shadow-[0_0_15px_rgba(163,230,53,0.3)] transform scale-110">
+                                  <Zap size={28} fill="currentColor"/>
+                               </div>
+                           </div>
+                           <div className="flex justify-between text-center font-bold">
+                               <div className="text-slate-500">50분<br/><span className="text-xs font-normal">지루함</span></div>
+                               <div className="text-white text-xl">30분<br/><span className="text-xs font-normal text-neon-400">초집중</span></div>
+                           </div>
+                           <div className="bg-slate-950 rounded-xl p-4 mt-4 text-center border border-white/5">
+                              <span className="text-slate-400 text-sm">비용 절감 효과</span>
+                              <div className="text-3xl font-black text-white mt-1">
+                                 -60<span className="text-lg text-neon-400">%</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+
+        {/* SLIDE 2: NFC Tap Concept */}
+        <div className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out flex items-center ${currentSlide === 1 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col md:flex-row items-center justify-between">
+            <div className="md:w-1/2 space-y-8 text-center md:text-left pt-20 md:pt-0">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-slate-800/50 border border-white/10 backdrop-blur-sm text-neon-300 text-sm font-bold mb-2 shadow-lg">
+                <Zap size={14} className="mr-2 fill-neon-300" />
+                피트니스의 넷플릭스, SPOT
+              </div>
+              <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-[1.1] tracking-tight">
+                도움이 필요할 땐,<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-300 to-neon-500 text-glow">
+                  핸드폰을 툭, (Tap)
+                </span>
+              </h1>
+              <p className="text-lg text-slate-400 max-w-lg mx-auto md:mx-0 leading-relaxed font-light">
+                운동하다 깔릴 것 같을 때, 기구 사용법을 모를 때.<br/>
+                기구에 붙은 <strong className="text-white font-semibold">NFC 스티커에 태그</strong>만 하세요.<br/> 
+                트레이너가 당신의 위치로 즉시 달려갑니다.
+              </p>
+              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4 justify-center md:justify-start">
+                <button 
+                  onClick={() => navigate('/user')}
+                  className="group relative px-8 py-4 bg-neon-400 text-slate-900 rounded-2xl font-bold text-lg shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:shadow-[0_0_30px_rgba(163,230,53,0.5)] hover:bg-neon-300 transition-all flex items-center justify-center overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                  <span className="relative flex items-center">SPOT 시작하기 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} /></span>
+                </button>
+              </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-[1.1] tracking-tight">
-              원하는 순간,<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-300 to-neon-500 text-glow">
-                딱 30분만.
-              </span>
-            </h1>
-            <p className="text-lg text-slate-400 max-w-lg mx-auto md:mx-0 leading-relaxed font-light">
-              수십만 원짜리 PT 계약의 부담을 없앴습니다.<br/>
-              <strong className="text-white font-semibold">커피 4잔 값(25,000원)</strong>으로 국가대표급 트레이너의<br/> 
-              프리미엄 포인트 레슨을 경험하세요.
-            </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4 justify-center md:justify-start">
-              <button 
-                onClick={() => navigate('/user')}
-                className="group relative px-8 py-4 bg-neon-400 text-slate-900 rounded-2xl font-bold text-lg shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:shadow-[0_0_30px_rgba(163,230,53,0.5)] hover:bg-neon-300 transition-all flex items-center justify-center overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <span className="relative flex items-center">SPOT 시작하기 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} /></span>
-              </button>
+            
+            <div className="md:w-1/2 mt-16 md:mt-0 relative flex justify-center">
+              <div className="relative z-10 transform rotate-[-3deg] hover:rotate-0 transition-duration-500 duration-500">
+                 <div className="glass-card p-8 rounded-[2rem] shadow-2xl max-w-sm mx-auto relative overflow-hidden text-center">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-neon-500/10 rounded-full blur-2xl"></div>
+                    
+                    <div className="w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-[0_0_30px_rgba(163,230,53,0.2)] animate-pulse">
+                       <Nfc size={40} className="text-neon-400" />
+                    </div>
+                    <h3 className="text-2xl font-black text-white mb-2">Tap to Call</h3>
+                    <p className="text-slate-400 text-sm mb-6">기구에 핸드폰을 대면<br/>자동으로 트레이너가 호출됩니다.</p>
+                    
+                    <div className="bg-slate-900/80 p-4 rounded-xl border border-white/5 flex items-center space-x-3 text-left">
+                       <div className="w-10 h-10 rounded-full bg-red-500/20 text-red-500 flex items-center justify-center font-bold shrink-0">
+                          SOS
+                       </div>
+                       <div>
+                          <div className="text-white font-bold text-sm">긴급 도움 요청</div>
+                          <div className="text-slate-500 text-xs">"벤치프레스 2번 렉으로 와주세요"</div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
             </div>
           </div>
-          
-          <div className="md:w-1/2 mt-16 md:mt-0 relative flex justify-center">
-            {/* Comparison Visual - Glassmorphism */}
-            <div className="relative z-10 transform rotate-[-3deg] hover:rotate-0 transition-duration-500 duration-500">
-               <div className="glass-card p-8 rounded-[2rem] shadow-2xl max-w-sm mx-auto relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-neon-500/10 rounded-full blur-2xl"></div>
-                  
-                  <div className="flex justify-between items-center mb-8 border-b border-white/5 pb-6">
-                      <div className="text-slate-500 font-bold line-through text-sm">기존 PT (1회)</div>
-                      <div className="text-neon-300 font-extrabold text-2xl tracking-wider">SPOT</div>
-                  </div>
-                  <div className="space-y-6">
-                      <div className="flex justify-between items-center">
-                          <span className="text-slate-400 text-sm font-medium">비용</span>
-                          <div className="text-right">
-                              <span className="text-slate-600 text-xs line-through block mb-1">70,000원</span>
-                              <span className="text-white font-bold text-3xl">25,000<span className="text-sm text-slate-400 ml-1">원</span></span>
-                          </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                          <span className="text-slate-400 text-sm font-medium">시간</span>
-                          <div className="text-right">
-                              <span className="text-slate-600 text-xs line-through block mb-1">50분 (루즈함)</span>
-                              <span className="text-neon-300 font-bold text-lg">30분 (핵심만)</span>
-                          </div>
-                      </div>
-                       <div className="flex justify-between items-center">
-                          <span className="text-slate-400 text-sm font-medium">계약</span>
-                          <div className="text-right">
-                              <span className="text-slate-600 text-xs line-through block mb-1">10회 의무</span>
-                              <span className="text-white font-bold">1회씩 자유롭게</span>
-                          </div>
-                      </div>
-                  </div>
-                  <div className="mt-8 bg-slate-900/50 border border-white/5 p-4 rounded-xl text-center text-xs text-slate-500">
-                      * 불필요한 잡담을 뺀 순수 티칭 타임
-                  </div>
-               </div>
-            </div>
-          </div>
+        </div>
+
+        {/* Slider Indicators */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
+            {[0, 1].map((idx) => (
+                <button
+                    key={idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                        currentSlide === idx ? 'w-8 bg-neon-400' : 'w-2 bg-slate-600 hover:bg-slate-500'
+                    }`}
+                />
+            ))}
         </div>
       </section>
 
@@ -98,7 +173,7 @@ export const LandingPage: React.FC = () => {
               {[
                 { icon: Zap, color: 'text-neon-400', title: '압도적 몰입감', desc: '초보자가 고강도 집중력을 유지할 수 있는 최적의 시간은 30분입니다.' },
                 { icon: DollarSign, color: 'text-blue-400', title: '합리적 소비', desc: '1시간 PT 비용으로 3번의 레슨을. 필요할 때만 스마트하게 소비하세요.' },
-                { icon: Monitor, color: 'text-purple-400', title: '즉시 호출', desc: '예약 대기 없이, 헬스장 도착 후 키오스크에서 "지금 바로" 부르세요.' }
+                { icon: Smartphone, color: 'text-purple-400', title: 'NFC 원터치 호출', desc: '앱을 켜서 타자를 칠 필요도 없습니다. 기구에 핸드폰을 대기만 하세요.' }
               ].map((item, idx) => (
                 <div key={idx} className="glass-panel p-8 rounded-3xl hover:bg-slate-800/80 transition-all duration-300 group">
                     <div className={`w-14 h-14 ${item.color} bg-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/5`}>
@@ -147,7 +222,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* SPOT STATION Section (Previously SPOT GYM) */}
+      {/* SPOT STATION Section */}
       <section className="py-32 bg-slate-950 relative overflow-hidden">
           {/* Decorative BG */}
           <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-gradient-to-r from-neon-600/10 to-transparent rounded-full blur-[120px] transform -translate-y-1/2 -translate-x-1/2"></div>
@@ -232,9 +307,9 @@ export const LandingPage: React.FC = () => {
                   <h2 className="text-3xl md:text-4xl font-bold mb-10 text-white">How it works</h2>
                   <ul className="space-y-10">
                       {[
-                        { num: '01', title: '간편 로그인 & 충전', desc: '카카오톡으로 3초 가입. 사용할 만큼만 충전하세요.' },
-                        { num: '02', title: '운동 중 호출', desc: '앱이나 키오스크에서 내 위치(기구)를 입력하고 호출 버튼 터치.' },
-                        { num: '03', title: '즉시 케어 시작', desc: '대기 중인 트레이너가 3분 내로 회원님 자리로 이동합니다.' }
+                        { num: '01', title: '기구에 태그 (Tag)', desc: '도움이 필요하면 기구에 붙은 NFC 스티커에 핸드폰을 대세요. 앱 설치 없이 웹페이지가 열립니다.' },
+                        { num: '02', title: '모바일 결제 (Pay)', desc: '열린 페이지에서 본인 인증(로그인) 후, 1회 이용권을 즉시 결제합니다.' },
+                        { num: '03', title: '즉시 케어 (Care)', desc: '결제와 동시에 트레이너에게 내 위치가 전송되어 바로 도착합니다.' }
                       ].map((step, idx) => (
                         <li key={idx} className="flex items-start">
                             <div className="text-5xl font-black text-slate-800 mr-6 -mt-4 font-mono">{step.num}</div>
@@ -251,21 +326,28 @@ export const LandingPage: React.FC = () => {
                       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-slate-500 ml-auto font-mono">LIVE ACTIVITY</span>
+                      <span className="text-xs text-slate-500 ml-auto font-mono">SPOT MOBILE WEB</span>
                    </div>
                    <div className="space-y-5">
                       <div className="bg-slate-900 p-5 rounded-xl flex justify-between items-center border border-white/5">
-                          <span className="text-slate-300 text-sm">📍 현재 위치 감지됨</span>
-                          <span className="font-bold text-neon-400">스포애니 강남점</span>
+                          <span className="text-slate-300 text-sm flex items-center"><Nfc size={16} className="mr-2 text-neon-400"/> NFC Tagged</span>
+                          <span className="font-bold text-white">Bench Press #02</span>
                       </div>
-                      <div className="bg-gradient-to-br from-neon-900/20 to-slate-900 p-5 rounded-xl border border-neon-500/20 relative overflow-hidden">
-                          <div className="absolute top-0 right-0 w-20 h-20 bg-neon-500/10 rounded-full blur-xl"></div>
-                          <div className="text-xs text-neon-400 mb-2 font-bold tracking-wider uppercase">Request</div>
-                          <div className="font-bold text-white text-lg">"스쿼트 자세가 너무 불안해요.<br/>허리가 아픕니다."</div>
+                      
+                      {/* Simulating Login/Pay Step */}
+                      <div className="bg-slate-800/50 p-4 rounded-xl border border-white/5 space-y-3">
+                          <div className="flex items-center space-x-3 text-sm text-slate-300">
+                             <UserPlus size={16} />
+                             <span>간편 로그인 (카카오/네이버)</span>
+                          </div>
+                          <div className="flex items-center space-x-3 text-sm text-slate-300">
+                             <CreditCard size={16} />
+                             <span>1회권 결제 (25,000원)</span>
+                          </div>
                       </div>
-                      <button className="w-full bg-neon-400 hover:bg-neon-300 text-slate-900 py-4 rounded-xl font-bold transition-all flex justify-between px-6 shadow-[0_0_15px_rgba(163,230,53,0.3)]">
-                          <span>트레이너 호출</span>
-                          <span>25,000 P</span>
+
+                      <button className="w-full bg-neon-400 hover:bg-neon-300 text-slate-900 py-4 rounded-xl font-bold transition-all flex justify-center items-center shadow-[0_0_15px_rgba(163,230,53,0.3)]">
+                          <span>트레이너 호출하기</span>
                       </button>
                    </div>
               </div>
@@ -273,6 +355,32 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
       
+      {/* NFC Simulation Tools */}
+      <section className="bg-slate-800/50 py-12 border-t border-white/5">
+         <div className="max-w-4xl mx-auto px-4 text-center">
+            <h3 className="text-slate-400 font-bold mb-6 text-sm uppercase tracking-widest">Developer Tools: NFC Simulation</h3>
+            <div className="flex flex-wrap justify-center gap-4">
+                {[
+                    { name: '벤치프레스 태그', loc: '벤치프레스 2번' },
+                    { name: '스쿼트 랙 태그', loc: '스쿼트 랙 1번' },
+                    { name: '런닝머신 태그', loc: '런닝머신 5번' },
+                    { name: '덤벨존 태그', loc: '프리웨이트 덤벨존' }
+                ].map((tag, idx) => (
+                    <button 
+                        key={idx}
+                        onClick={() => navigate(`/user?nfc_location=${encodeURIComponent(tag.loc)}&gym_id=스포애니 강남점`)}
+                        className="px-6 py-3 bg-slate-700 hover:bg-neon-500 hover:text-slate-900 rounded-xl font-bold text-white transition-all flex items-center shadow-lg"
+                    >
+                        <Nfc size={16} className="mr-2"/> {tag.name}
+                    </button>
+                ))}
+            </div>
+            <p className="mt-4 text-xs text-slate-500">
+                * 실제 환경에서는 기구의 NFC 스티커에 핸드폰을 대면 해당 URL로 자동 연결됩니다.
+            </p>
+         </div>
+      </section>
+
       {/* B2B Teaser Section */}
       <section className="bg-slate-950 pt-20 pb-32 border-t border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
@@ -356,6 +464,18 @@ export const LandingPage: React.FC = () => {
             </div>
         </div>
       </section>
+
+      {/* Hidden Kiosk Entry Point */}
+      <footer className="bg-slate-900/50 py-6 border-t border-white/5 text-center text-slate-600 text-xs">
+         <p className="mb-2 font-bold text-slate-500">SPOT FITNESS CARE</p>
+         &copy; 2025 All rights reserved.
+         <div className="mt-4">
+             <button onClick={() => navigate('/kiosk')} className="text-slate-800 hover:text-slate-700 text-[10px] flex items-center justify-center mx-auto">
+                 <Tablet size={10} className="mr-1" />
+                 Launch Kiosk Mode
+             </button>
+         </div>
+      </footer>
     </div>
   );
 };

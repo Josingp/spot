@@ -83,7 +83,7 @@ export const DataStore = {
     return stored ? JSON.parse(stored) : null;
   },
 
-  setSession: (user: { name: string, role: UserRole, email?: string }) => {
+  setSession: (user: { name: string, role: UserRole, email?: string, balance?: number }) => {
     localStorage.setItem(KEYS.USER, JSON.stringify(user));
   },
 

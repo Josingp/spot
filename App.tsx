@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -7,6 +8,7 @@ import { TrainerPromoPage } from './pages/TrainerPromoPage';
 import { UserApp } from './pages/UserApp';
 import { AdminApp } from './pages/AdminApp';
 import { LoginPage } from './pages/LoginPage';
+import { KioskPage } from './pages/KioskPage';
 import { UserRole } from './types';
 import { DataStore } from './utils/dataStore';
 
@@ -65,6 +67,11 @@ const App: React.FC = () => {
               <TrainerPromoPage />
             </Layout>
           } 
+        />
+        {/* Kiosk Mode - No standard Layout */}
+        <Route 
+          path="/kiosk" 
+          element={<KioskPage />} 
         />
         <Route 
           path="/user/*" 
