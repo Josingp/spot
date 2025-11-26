@@ -1,6 +1,7 @@
+
 import React, { ReactNode } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Dumbbell, Home, User, Settings, Menu, X, ArrowLeft, Briefcase, LogOut, LogIn, UserCheck } from 'lucide-react';
+import { Dumbbell, Home, User, Settings, Menu, X, ArrowLeft, Briefcase, LogOut, LogIn, UserCheck, Presentation } from 'lucide-react';
 import { UserRole } from '../types';
 
 interface LayoutProps {
@@ -54,6 +55,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, role, onLogout }) => {
             <div className="hidden md:flex items-center space-x-6">
               {role === UserRole.GUEST && (
                 <>
+                  <button onClick={() => navigate('/ir')} className="text-slate-400 hover:text-neon-300 font-medium text-sm transition-colors flex items-center">
+                     <Presentation size={16} className="mr-1.5" /> 기업 비전(IR)
+                  </button>
                   <button onClick={() => navigate('/trainer-promo')} className="text-slate-400 hover:text-neon-300 font-medium text-sm transition-colors flex items-center">
                      <UserCheck size={16} className="mr-1.5" /> 트레이너 지원
                   </button>
@@ -97,6 +101,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, role, onLogout }) => {
             {role === UserRole.GUEST && (
               <>
                  <NavItem to="/" icon={Home} label="홈" />
+                 <NavItem to="/ir" icon={Presentation} label="기업 비전(IR)" />
                  <NavItem to="/trainer-promo" icon={UserCheck} label="트레이너 지원" />
                  <NavItem to="/partner" icon={Briefcase} label="가맹점 입점문의" />
                  <NavItem to="/login" icon={LogIn} label="로그인" />

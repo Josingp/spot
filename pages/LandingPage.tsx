@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target, Smartphone, CreditCard, UserPlus, Clock, Database, Download } from 'lucide-react';
+import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target, Smartphone, CreditCard, UserPlus, Clock, Database, Download, Nfc, Wifi, ChevronRight } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ export const LandingPage: React.FC = () => {
                                <div className="text-slate-500">50분<br/><span className="text-xs font-normal">비효율적 휴식 포함</span></div>
                                <div className="text-white text-xl">30분<br/><span className="text-xs font-normal text-neon-400">고밀도 코칭</span></div>
                            </div>
-                           <div className="bg-slate-950 rounded-xl p-4 mt-4 text-center border border-white/5">
+                           <div className="bg-slate-900 rounded-xl p-4 mt-4 text-center border border-white/5">
                               <span className="text-slate-400 text-sm">진입 비용 절감</span>
                               <div className="text-3xl font-black text-white mt-1">
                                  -60<span className="text-lg text-neon-400">%</span>
@@ -160,6 +160,110 @@ export const LandingPage: React.FC = () => {
                 />
             ))}
         </div>
+      </section>
+
+      {/* NFC Visual Experience Section (Revised) */}
+      <section className="py-24 bg-slate-900 relative overflow-hidden border-b border-white/5">
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-16">
+               <span className="text-neon-400 font-bold tracking-widest text-xs uppercase mb-2 block animate-pulse">On-site Experience</span>
+               <h2 className="text-4xl font-extrabold text-white mb-4">
+                  "이 기구, 어떻게 쓰더라?"<br/>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-300 to-green-400">핸드폰을 '툭' 대세요</span>
+               </h2>
+               <p className="text-slate-400 text-lg">기구에 붙은 스티커에 태그하면, 앱 설치 없이 바로 코치를 부를 수 있습니다.</p>
+            </div>
+
+            <div className="flex flex-col md:flex-row items-center justify-center gap-16">
+               
+               {/* Sticker Container with Animation */}
+               <div className="relative group w-80 h-80 flex-shrink-0">
+                   {/* Phone Animation Overlay */}
+                   <div className="absolute z-30 pointer-events-none top-0 left-0 w-full h-full flex items-center justify-center">
+                       <div className="w-28 h-56 bg-slate-800 rounded-[2rem] border-4 border-slate-600 shadow-2xl transform transition-all duration-[2000ms] ease-in-out opacity-0 animate-[tap-phone_4s_infinite]">
+                           <div className="w-full h-full bg-slate-900 rounded-[1.7rem] overflow-hidden relative">
+                               <div className="absolute top-0 left-0 right-0 h-6 bg-slate-800 flex justify-center items-center">
+                                   <div className="w-12 h-1 bg-slate-700 rounded-full"></div>
+                               </div>
+                               <div className="w-full h-full flex flex-col items-center justify-center text-white">
+                                   <Wifi size={28} className="text-neon-400 animate-ping mb-4" />
+                                   <span className="text-[10px] font-bold">NFC Tagging...</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+
+                   {/* Main Sticker - Pixel Perfect Recreation */}
+                   <div className="w-full h-full rounded-full overflow-hidden relative shadow-[0_20px_60px_rgba(163,230,53,0.3)] border-2 border-white/10 transform transition-transform duration-300 hover:scale-105">
+                      {/* Top Half: Lime (65%) */}
+                      <div className="absolute top-0 left-0 w-full h-[65%] bg-[#a3e635] flex flex-col items-center justify-center pt-2">
+                          <h3 className="text-4xl font-black text-white leading-none text-center tracking-tighter drop-shadow-md mb-2">
+                              지금 바로
+                          </h3>
+                          <h2 className="text-7xl font-black text-white leading-none text-center tracking-tighter drop-shadow-md z-10 pb-6">
+                              코치 소환!
+                          </h2>
+                          
+                          {/* Illustration Placeholder (Man) */}
+                          <div className="absolute bottom-2 right-12 opacity-30 transform rotate-12">
+                              <Zap size={72} className="text-white fill-white"/>
+                          </div>
+                      </div>
+                      
+                      {/* Bottom Half: Dark Grey (35%) */}
+                      <div className="absolute bottom-0 left-0 w-full h-[35%] bg-[#2c2c2c] flex items-center justify-between px-8 pb-3">
+                           <div className="text-white text-left">
+                               <div className="text-xs font-bold leading-tight opacity-90">30분만 받아보세요,</div>
+                               <div className="text-lg font-black leading-tight mt-0.5">   운동이 바뀝니다.</div>
+                           </div>
+                           
+                           {/* QR Code */}
+                           <div className="bg-white p-1 rounded-sm">
+                              <QrCode size={36} className="text-slate-900" />
+                           </div>
+                      </div>
+
+                      {/* Floating Capsule (Between Two Colors) */}
+                      <div className="absolute top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full px-6 py-2.5 flex items-center shadow-xl z-20 whitespace-nowrap">
+                           <Nfc size={20} className="text-slate-900 mr-2" />
+                           <span className="text-slate-900 font-extrabold text-sm tracking-tighter">여기 대면 바로 시작!</span>
+                      </div>
+                   </div>
+               </div>
+               
+               {/* Instructions */}
+               <div className="space-y-8 max-w-md">
+                  <div className="flex items-start">
+                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-neon-400 flex items-center justify-center font-bold text-slate-900 text-lg mr-5 border-4 border-slate-800 shadow-lg relative z-10">1</div>
+                     <div className="pt-1">
+                        <h3 className="text-xl font-bold text-white mb-2">발견 </h3>
+                        <p className="text-slate-400">운동 중 자세가 어렵거나 통증이 느껴질 때, 기구에 부착된 <strong>형광색 스티커</strong>를 찾으세요.</p>
+                     </div>
+                  </div>
+                  <div className="relative">
+                      {/* Connector Line */}
+                      <div className="absolute left-5 -top-8 bottom-8 w-0.5 bg-slate-800 -z-0"></div>
+                      <div className="flex items-start">
+                         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-slate-900 text-lg mr-5 border-4 border-slate-800 shadow-lg relative z-10">2</div>
+                         <div className="pt-1">
+                            <h3 className="text-xl font-bold text-white mb-2">태그</h3>
+                            <p className="text-slate-400">핸드폰 뒷면(NFC)을 스티커 중앙에 가볍게 대거나, 카메라로 QR 코드를 스캔하세요.</p>
+                         </div>
+                      </div>
+                  </div>
+                  <div className="relative">
+                      <div className="absolute left-5 -top-8 bottom-8 w-0.5 bg-slate-800 -z-0"></div>
+                      <div className="flex items-start">
+                         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-white text-lg mr-5 border-4 border-slate-800 shadow-lg relative z-10">3</div>
+                         <div className="pt-1">
+                            <h3 className="text-xl font-bold text-white mb-2">트레이너 도착</h3>
+                            <p className="text-slate-400">가입 및 결제가 완료되면, 트레이너가 회원님의 위치로 즉시 도착합니다.</p>
+                         </div>
+                      </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </section>
 
       {/* Benefits Grid */}
@@ -297,7 +401,7 @@ export const LandingPage: React.FC = () => {
           </div>
       </section>
 
-      {/* User Flow (Steps) */}
+      {/* User Flow (Steps) - Revised */}
       <section className="px-4 sm:px-6 lg:px-8 py-24 bg-slate-900">
         <div className="max-w-7xl mx-auto glass-panel rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
           {/* Background Glow */}
@@ -307,13 +411,13 @@ export const LandingPage: React.FC = () => {
               <div>
                   <h2 className="text-3xl md:text-4xl font-bold mb-10 text-white">이용 방법</h2>
                   <p className="text-slate-400 mb-8">
-                     전용 앱(App)을 사용하거나, 설치 없이 NFC 태그만으로도 이용 가능합니다.
+                     복잡한 절차 없이, 태그 한 번으로 시작하세요.
                   </p>
                   <ul className="space-y-10">
                       {[
-                        { num: '01', title: '실행 (Access)', desc: 'SPOT 앱을 켜거나, 기구에 붙은 NFC를 태그하세요.' },
-                        { num: '02', title: '요청 (Request)', desc: '카카오/네이버로 3초 만에 가입하고 결제합니다.' },
-                        { num: '03', title: '케어 (Care)', desc: '트레이너가 즉시 도착하여 30분간 티칭을 제공합니다.' }
+                        { num: '01', title: '실행 (Access)', desc: '기구에 부착된 NFC를 태그하거나 앱을 실행하세요.' },
+                        { num: '02', title: '가입 및 결제 (Sign & Pay)', desc: '카카오 3초 가입 후, 1회 이용권을 결제합니다.' },
+                        { num: '03', title: '트레이너 도착 (Arrival)', desc: '결제 완료 즉시, 트레이너가 회원님의 위치로 도착합니다.' }
                       ].map((step, idx) => (
                         <li key={idx} className="flex items-start">
                             <div className="text-5xl font-black text-slate-800 mr-6 -mt-4 font-mono">{step.num}</div>
@@ -354,13 +458,13 @@ export const LandingPage: React.FC = () => {
                           </div>
                           <div className="flex items-center space-x-3 text-sm text-slate-300">
                              <CreditCard size={16} />
-                             <span>결제 준비 완료 (25,000원)</span>
+                             <span>결제 완료 (25,000원)</span>
                           </div>
                       </div>
 
-                      <button className="w-full bg-neon-400 hover:bg-neon-300 text-slate-900 py-4 rounded-xl font-bold transition-all flex justify-center items-center shadow-[0_0_15px_rgba(163,230,53,0.3)]">
-                          <span>지금 호출하기</span>
-                      </button>
+                      <div className="bg-neon-400 text-slate-900 py-4 rounded-xl font-bold transition-all flex justify-center items-center shadow-[0_0_15px_rgba(163,230,53,0.3)]">
+                          <span>트레이너 호출 중...</span>
+                      </div>
                    </div>
               </div>
           </div>
@@ -449,6 +553,16 @@ export const LandingPage: React.FC = () => {
                 </div>
             </div>
         </div>
+      </section>
+
+      {/* Button to IR Page */}
+      <section className="py-12 bg-slate-950 border-t border-white/5 text-center">
+           <button 
+              onClick={() => navigate('/ir')} 
+              className="text-slate-500 hover:text-white transition-colors text-sm font-medium flex items-center justify-center mx-auto"
+           >
+              <Lock size={14} className="mr-2" /> 투자자 정보 (IR)
+           </button>
       </section>
 
       {/* Simple Footer */}

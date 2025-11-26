@@ -8,6 +8,7 @@ import { TrainerPromoPage } from './pages/TrainerPromoPage';
 import { UserApp } from './pages/UserApp';
 import { AdminApp } from './pages/AdminApp';
 import { LoginPage } from './pages/LoginPage';
+import { IRPage } from './pages/IRPage'; // Added import
 import { UserRole } from './types';
 import { DataStore } from './utils/dataStore';
 
@@ -64,6 +65,14 @@ const App: React.FC = () => {
           element={
             <Layout role={role} onLogout={handleLogout}>
               <TrainerPromoPage />
+            </Layout>
+          } 
+        />
+        <Route 
+          path="/ir" 
+          element={
+            <Layout role={role} onLogout={handleLogout}>
+              <IRPage />
             </Layout>
           } 
         />
