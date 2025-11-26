@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Smartphone, Zap, DollarSign, Clock, CheckCircle, ArrowRight, Shield, Bell, ToggleRight, UserCheck, Map, Calendar, Megaphone, Users } from 'lucide-react';
@@ -129,7 +130,7 @@ export const TrainerPromoPage: React.FC = () => {
                       className="rounded-[1.8rem] w-full h-auto opacity-80" 
                     />
                     <div className="absolute bottom-6 left-6 right-6 bg-slate-900/90 backdrop-blur-md p-4 rounded-xl border border-neon-500/30">
-                       <div className="text-neon-400 font-bold text-xs uppercase mb-1">Open Platform</div>
+                       <div className="text-neon-400 font-bold text-xs uppercase mb-1">오픈 플랫폼</div>
                        <div className="text-white font-bold">"여기선 먼저 말을 걸어도 됩니다."</div>
                     </div>
                  </div>
@@ -184,8 +185,8 @@ export const TrainerPromoPage: React.FC = () => {
                           {/* Call Card Popup */}
                           <div className="absolute bottom-4 left-4 right-4 bg-slate-900/95 backdrop-blur-xl border border-neon-500/50 rounded-2xl p-5 shadow-2xl z-30">
                               <div className="flex justify-between items-start mb-3">
-                                  <span className="bg-neon-500 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase">New Call</span>
-                                  <span className="text-slate-500 text-[10px]">Just now</span>
+                                  <span className="bg-neon-500 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded uppercase">새로운 호출</span>
+                                  <span className="text-slate-500 text-[10px]">방금 전</span>
                               </div>
                               <h4 className="font-bold text-white text-lg leading-tight mb-1">스쿼트 자세 교정 요청</h4>
                               <p className="text-slate-400 text-xs mb-4">현재 헬스장 - 프리웨이트 존</p>
@@ -194,7 +195,7 @@ export const TrainerPromoPage: React.FC = () => {
                                       <span className="font-bold text-xl text-neon-400 tracking-tight">
                                         {SESSION_PRICE.toLocaleString()}원
                                       </span>
-                                      <span className="text-[10px] text-slate-500 block uppercase tracking-wider">결제 금액 (Payment)</span>
+                                      <span className="text-[10px] text-slate-500 block uppercase tracking-wider">결제 완료</span>
                                   </div>
                                   <button className="bg-white text-slate-900 px-5 py-2 rounded-lg text-sm font-bold hover:bg-slate-200">수락</button>
                               </div>
@@ -229,8 +230,8 @@ export const TrainerPromoPage: React.FC = () => {
                             className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-neon-400"
                           />
                           <div className="flex justify-between text-[10px] text-slate-600 mt-3 uppercase font-bold tracking-wider">
-                              <span>Min 1</span>
-                              <span>Max 10</span>
+                              <span>최소 1건</span>
+                              <span>최대 10건</span>
                           </div>
                       </div>
 
@@ -257,14 +258,14 @@ export const TrainerPromoPage: React.FC = () => {
 
                   <div className="flex flex-col md:flex-row justify-around items-center space-y-8 md:space-y-0 pt-10 border-t border-white/5 relative z-10">
                        <div className="text-center md:text-left">
-                           <div className="text-slate-500 text-xs uppercase tracking-wider mb-1">예상 월 매출 (Gross)</div>
+                           <div className="text-slate-500 text-xs uppercase tracking-wider mb-1">예상 월 매출</div>
                            <div className="text-2xl font-bold text-slate-400">
                                {(sessionsPerDay * SESSION_PRICE * workingDays).toLocaleString()}원
                            </div>
                        </div>
                        <div className="hidden md:block w-px h-16 bg-white/10"></div>
                        <div className="text-center md:text-right">
-                           <div className="text-neon-400 text-xs uppercase tracking-wider mb-1 font-bold">예상 월 순수익 (Net Profit)</div>
+                           <div className="text-neon-400 text-xs uppercase tracking-wider mb-1 font-bold">예상 월 순수익</div>
                            <div className="text-5xl font-black text-white text-glow">
                                {(Math.floor(netEarningsPerSession * sessionsPerDay * workingDays)).toLocaleString()}<span className="text-2xl text-slate-500 ml-1 font-medium">원</span>
                            </div>

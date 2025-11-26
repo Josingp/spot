@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dumbbell, Lock, User, Monitor, Loader2 } from 'lucide-react';
@@ -73,11 +74,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               {mode === 'USER' ? <Dumbbell size={40} /> : <Monitor size={40} />}
             </div>
             <h2 className="text-3xl font-extrabold text-white mb-2">
-              {mode === 'USER' ? 'SPOT 시작하기' : 'Admin Access'}
+              {mode === 'USER' ? 'SPOT 시작하기' : '관리자 접속'}
             </h2>
             <p className="text-slate-500 text-sm">
               {mode === 'USER' 
-                ? '3초만에 로그인하고 운동을 시작하세요.' 
+                ? '3초 만에 로그인하고 운동을 시작하세요.' 
                 : '매장 및 트레이너 관리 시스템'}
             </p>
           </div>
@@ -109,7 +110,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           ) : (
             <form onSubmit={handleAdminLogin} className="space-y-5">
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Username</label>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">아이디</label>
                 <div className="relative">
                   <User className="absolute left-4 top-4 text-slate-500" size={20} />
                   <input 
@@ -122,7 +123,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">Password</label>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">비밀번호</label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-4 text-slate-500" size={20} />
                   <input 
