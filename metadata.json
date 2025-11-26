@@ -1,0 +1,9 @@
+{
+  "name": "Spot Fitness Care",
+  "description": "On-demand fitness platform where trainers come to you. Immediate booking, 5% commission.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
