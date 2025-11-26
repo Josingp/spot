@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target, Smartphone, CreditCard, UserPlus, Clock, Database, Download, Nfc, Wifi, ChevronRight } from 'lucide-react';
+import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target, Smartphone, CreditCard, UserPlus, Clock, Database, Download, Nfc, Wifi, ChevronRight, UserCheck, Star, Search, UserX } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -168,10 +168,10 @@ export const LandingPage: React.FC = () => {
             <div className="text-center mb-16">
                <span className="text-neon-400 font-bold tracking-widest text-xs uppercase mb-2 block animate-pulse">On-site Experience</span>
                <h2 className="text-4xl font-extrabold text-white mb-4">
-                  "이 기구, 어떻게 쓰더라?"<br/>
+                  "남들은 자극 온다는데, 왜 나만 관절이 아플까?"<br/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-300 to-green-400">핸드폰을 '툭' 대세요</span>
                </h2>
-               <p className="text-slate-400 text-lg">기구에 붙은 스티커에 태그하면, 앱 설치 없이 바로 코치를 부를 수 있습니다.</p>
+               <p className="text-slate-400 text-lg">기구에 붙은 스티커에 태그하면, 앱 설치 없이 바로 트레이너를 부를 수 있습니다.</p>
             </div>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-16">
@@ -257,7 +257,7 @@ export const LandingPage: React.FC = () => {
                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-white text-lg mr-5 border-4 border-slate-800 shadow-lg relative z-10">3</div>
                          <div className="pt-1">
                             <h3 className="text-xl font-bold text-white mb-2">트레이너 도착</h3>
-                            <p className="text-slate-400">가입 및 결제가 완료되면, 트레이너가 회원님의 위치로 즉시 도착합니다.</p>
+                            <p className="text-slate-400">간편 가입 후 결제가 완료되면, 트레이너가 회원님의 위치로 즉시 도착합니다.</p>
                          </div>
                       </div>
                   </div>
@@ -266,7 +266,7 @@ export const LandingPage: React.FC = () => {
          </div>
       </section>
 
-      {/* Benefits Grid */}
+      {/* Benefits Grid (Updated) */}
       <section className="py-24 bg-slate-900/50 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -278,7 +278,7 @@ export const LandingPage: React.FC = () => {
               {[
                 { icon: Zap, color: 'text-neon-400', title: '고강도 집중', desc: '생리학적으로 일반인이 고강도 집중력을 유지할 수 있는 최적의 시간은 30분 내외입니다.' },
                 { icon: DollarSign, color: 'text-blue-400', title: '비용 효율성', desc: '1회 7만원 상당의 PT 비용을 세분화하여, 진입 장벽을 낮추고 재구매율을 높였습니다.' },
-                { icon: Smartphone, color: 'text-purple-400', title: '쉬운 접근성', desc: '앱 설치 여부와 관계없이, NFC 및 모바일 웹을 통해 즉각적인 서비스 이용이 가능합니다.' }
+                { icon: UserCheck, color: 'text-purple-400', title: '스마트한 선택', desc: '센터에서 배정해주는 대로 하지 마세요. 여러 전문가를 경험해보고 나에게 딱 맞는 멘토를 찾아 장기 PT를 결정하세요.' }
               ].map((item, idx) => (
                 <div key={idx} className="glass-panel p-8 rounded-3xl hover:bg-slate-800/80 transition-all duration-300 group">
                     <div className={`w-14 h-14 ${item.color} bg-slate-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg border border-white/5`}>
@@ -290,6 +290,124 @@ export const LandingPage: React.FC = () => {
                     </p>
                 </div>
               ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SPOT PRO Highlight (Replacing User Flow) */}
+      <section className="px-4 sm:px-6 lg:px-8 py-24 bg-slate-900">
+        <div className="max-w-7xl mx-auto glass-panel rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
+          {/* Background Glow */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px]"></div>
+
+          <div className="grid md:grid-cols-2 gap-16 items-center relative z-10">
+              <div className="order-2 md:order-1">
+                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-neon-400/10 border border-neon-400/20 text-neon-400 text-xs font-bold mb-6">
+                     <Star size={12} className="mr-2 fill-neon-400" /> SPOT PRO
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-extrabold mb-8 text-white leading-tight">
+                     센터 트레이너가<br/>모두 바쁘다면?
+                  </h2>
+                  <p className="text-slate-400 mb-8 text-lg leading-relaxed">
+                     걱정하지 마세요. SPOT 네트워크를 통해<br/>
+                     <strong className="text-white">주변에 있는 검증된 전문가(SPOT PRO)</strong>를<br/> 
+                     즉시 호출할 수 있습니다.
+                  </p>
+                  
+                  <ul className="space-y-4 mb-10">
+                      <li className="flex items-center text-slate-300">
+                          <CheckCircle className="text-neon-400 mr-3" size={20} />
+                          <span>센터 소속 여부와 관계없이 실시간 매칭</span>
+                      </li>
+                      <li className="flex items-center text-slate-300">
+                          <CheckCircle className="text-neon-400 mr-3" size={20} />
+                          <span>거리 기반 가장 빠른 전문가 자동 배정</span>
+                      </li>
+                      <li className="flex items-center text-slate-300">
+                          <CheckCircle className="text-neon-400 mr-3" size={20} />
+                          <span>모든 전문가는 SPOT의 엄격한 검증 완료</span>
+                      </li>
+                  </ul>
+
+                  <button onClick={() => navigate('/user')} className="px-8 py-4 bg-neon-400 text-slate-900 rounded-2xl font-bold text-lg hover:bg-neon-300 transition-all shadow-lg shadow-neon-400/20">
+                      내 주변 전문가 찾기
+                  </button>
+              </div>
+              
+              <div className="order-1 md:order-2 bg-slate-950 rounded-[2.5rem] p-6 border-4 border-slate-800 shadow-2xl transform md:rotate-3 hover:rotate-0 transition-transform duration-500 max-w-sm mx-auto w-full">
+                   {/* Phone UI Mockup */}
+                   <div className="bg-slate-900 rounded-[2rem] overflow-hidden border border-white/5 h-full min-h-[400px]">
+                       {/* Header */}
+                       <div className="bg-slate-800 p-4 flex justify-between items-center border-b border-white/5">
+                           <span className="font-bold text-white text-sm">트레이너 목록</span>
+                           <Search size={16} className="text-slate-400" />
+                       </div>
+                       
+                       {/* List */}
+                       <div className="p-4 space-y-3">
+                           {/* Center Trainer 1 (Busy) */}
+                           <div className="flex items-center p-3 rounded-xl bg-slate-800/30 border border-white/5 grayscale opacity-60">
+                               <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-slate-500 mr-3">
+                                   <UserX size={20} />
+                               </div>
+                               <div className="flex-1">
+                                   <div className="text-sm font-bold text-slate-400">김철수 (센터)</div>
+                                   <div className="text-[10px] text-slate-500">PT 수업중</div>
+                               </div>
+                               <div className="bg-slate-700 text-slate-400 text-[10px] font-bold px-2 py-1 rounded">BUSY</div>
+                           </div>
+                           
+                           {/* Center Trainer 2 (Busy) */}
+                           <div className="flex items-center p-3 rounded-xl bg-slate-800/30 border border-white/5 grayscale opacity-60">
+                               <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-slate-500 mr-3">
+                                   <UserX size={20} />
+                               </div>
+                               <div className="flex-1">
+                                   <div className="text-sm font-bold text-slate-400">박영희 (센터)</div>
+                                   <div className="text-[10px] text-slate-500">상담중</div>
+                               </div>
+                               <div className="bg-slate-700 text-slate-400 text-[10px] font-bold px-2 py-1 rounded">BUSY</div>
+                           </div>
+
+                           {/* Divider */}
+                           <div className="flex items-center py-2">
+                               <div className="h-px bg-slate-700 flex-1"></div>
+                               <span className="text-[10px] text-slate-500 px-2">주변 전문가 (SPOT PRO) 검색됨</span>
+                               <div className="h-px bg-slate-700 flex-1"></div>
+                           </div>
+
+                           {/* SPOT PRO (Available) */}
+                           <div className="flex items-center p-3 rounded-xl bg-neon-900/10 border border-neon-500/50 shadow-[0_0_15px_rgba(163,230,53,0.1)] relative overflow-hidden group cursor-pointer">
+                               <div className="absolute top-0 right-0 w-12 h-12 bg-neon-400/20 blur-xl rounded-full"></div>
+                               <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-white mr-3 border border-neon-500/30">
+                                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" className="w-full h-full rounded-full object-cover" alt="" />
+                               </div>
+                               <div className="flex-1">
+                                   <div className="flex items-center">
+                                       <div className="text-sm font-bold text-white mr-1">최강혁 PRO</div>
+                                       <Star size={10} className="text-yellow-400 fill-yellow-400" />
+                                   </div>
+                                   <div className="text-[10px] text-neon-400 font-medium">3분 거리 • 즉시 도착 가능</div>
+                               </div>
+                               <div className="bg-neon-400 text-slate-900 text-[10px] font-bold px-2 py-1 rounded shadow-lg animate-pulse">호출</div>
+                           </div>
+                           
+                           {/* SPOT PRO 2 (Available) */}
+                           <div className="flex items-center p-3 rounded-xl bg-slate-800/50 border border-neon-500/20 hover:border-neon-500/50 transition-colors">
+                               <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-white mr-3 border border-white/10">
+                                    <img src="https://images.unsplash.com/photo-1611672585731-fa1060a7a9c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" className="w-full h-full rounded-full object-cover" alt="" />
+                               </div>
+                               <div className="flex-1">
+                                   <div className="flex items-center">
+                                       <div className="text-sm font-bold text-slate-300 mr-1">이지은 PRO</div>
+                                   </div>
+                                   <div className="text-[10px] text-slate-500">5분 거리</div>
+                               </div>
+                               <div className="bg-slate-700 text-slate-300 text-[10px] font-bold px-2 py-1 rounded">호출</div>
+                           </div>
+                       </div>
+                   </div>
+              </div>
           </div>
         </div>
       </section>
@@ -399,76 +517,6 @@ export const LandingPage: React.FC = () => {
                   </div>
               </div>
           </div>
-      </section>
-
-      {/* User Flow (Steps) - Revised */}
-      <section className="px-4 sm:px-6 lg:px-8 py-24 bg-slate-900">
-        <div className="max-w-7xl mx-auto glass-panel rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
-          {/* Background Glow */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px]"></div>
-
-          <div className="grid md:grid-cols-2 gap-16 items-center relative z-10">
-              <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-10 text-white">이용 방법</h2>
-                  <p className="text-slate-400 mb-8">
-                     복잡한 절차 없이, 태그 한 번으로 시작하세요.
-                  </p>
-                  <ul className="space-y-10">
-                      {[
-                        { num: '01', title: '실행 (Access)', desc: '기구에 부착된 NFC를 태그하거나 앱을 실행하세요.' },
-                        { num: '02', title: '가입 및 결제 (Sign & Pay)', desc: '카카오 3초 가입 후, 1회 이용권을 결제합니다.' },
-                        { num: '03', title: '트레이너 도착 (Arrival)', desc: '결제 완료 즉시, 트레이너가 회원님의 위치로 도착합니다.' }
-                      ].map((step, idx) => (
-                        <li key={idx} className="flex items-start">
-                            <div className="text-5xl font-black text-slate-800 mr-6 -mt-4 font-mono">{step.num}</div>
-                            <div>
-                                <h4 className="font-bold text-xl mb-2 text-white">{step.title}</h4>
-                                <p className="text-slate-400 leading-relaxed">{step.desc}</p>
-                            </div>
-                        </li>
-                      ))}
-                  </ul>
-                  <div className="mt-8 flex gap-4">
-                      <button onClick={() => navigate('/user')} className="px-6 py-3 bg-neon-400 text-slate-900 rounded-xl font-bold hover:bg-neon-300 transition-all">
-                          웹으로 바로 시작하기
-                      </button>
-                      <button className="px-6 py-3 bg-slate-800 text-white rounded-xl font-bold border border-white/10 hover:bg-slate-700 flex items-center">
-                          <Download size={18} className="mr-2"/> 앱 다운로드
-                      </button>
-                  </div>
-              </div>
-              <div className="bg-slate-950 rounded-[2rem] p-6 border border-slate-800 shadow-2xl transform hover:scale-105 transition-transform duration-300">
-                   <div className="flex items-center space-x-2 mb-6 border-b border-slate-800 pb-4">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-xs text-slate-500 ml-auto font-mono">SPOT MOBILE</span>
-                   </div>
-                   <div className="space-y-5">
-                      <div className="bg-slate-900 p-5 rounded-xl flex justify-between items-center border border-white/5">
-                          <span className="text-slate-300 text-sm flex items-center"><Smartphone size={16} className="mr-2 text-neon-400"/> 위치 인식 완료</span>
-                          <span className="font-bold text-white">스쿼트 랙 #01</span>
-                      </div>
-                      
-                      {/* Simulating Login/Pay Step */}
-                      <div className="bg-slate-800/50 p-4 rounded-xl border border-white/5 space-y-3">
-                          <div className="flex items-center space-x-3 text-sm text-slate-300">
-                             <UserPlus size={16} />
-                             <span>카카오 간편 가입 완료</span>
-                          </div>
-                          <div className="flex items-center space-x-3 text-sm text-slate-300">
-                             <CreditCard size={16} />
-                             <span>결제 완료 (25,000원)</span>
-                          </div>
-                      </div>
-
-                      <div className="bg-neon-400 text-slate-900 py-4 rounded-xl font-bold transition-all flex justify-center items-center shadow-[0_0_15px_rgba(163,230,53,0.3)]">
-                          <span>트레이너 호출 중...</span>
-                      </div>
-                   </div>
-              </div>
-          </div>
-        </div>
       </section>
 
       {/* B2B Teaser Section */}
