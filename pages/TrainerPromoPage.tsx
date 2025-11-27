@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Smartphone, Zap, DollarSign, Clock, CheckCircle, ArrowRight, Shield, Bell, ToggleRight, UserCheck, Map, Calendar, Megaphone, Users } from 'lucide-react';
@@ -8,13 +7,21 @@ export const TrainerPromoPage: React.FC = () => {
   const [sessionsPerDay, setSessionsPerDay] = useState(3);
   const [workingDays, setWorkingDays] = useState(12);
   
-  const SESSION_PRICE = 25000;
-  const PG_FEE_PERCENT = 0.033; // 3.3%
-  const REVENUE_SHARE_PERCENT = 0.15; // 15% (10% Platform + 5% Gym)
+  const BASE_PRICE = 25000;
+  const SURCHARGE = 3000;
+  const TOTAL_PRICE = BASE_PRICE + SURCHARGE; // 28,000
   
-  // Logic: (Price - PG Fee) * (1 - Revenue Share)
-  const priceAfterPg = SESSION_PRICE * (1 - PG_FEE_PERCENT);
-  const netEarningsPerSession = priceAfterPg * (1 - REVENUE_SHARE_PERCENT);
+  const GYM_FEE = 6000; // Fixed 6,000 to Gym
+  
+  const GROSS_REVENUE_FOR_FEE = 22000; // Total - Gym Fee
+  
+  const PLATFORM_FEE_PERCENT = 0.10; // 10% of 22,000
+  const PG_FEE_PERCENT = 0.033; // 3.3% of 28,000 (Total Transaction)
+
+  const pgFee = TOTAL_PRICE * PG_FEE_PERCENT;
+  const platformFee = GROSS_REVENUE_FOR_FEE * PLATFORM_FEE_PERCENT;
+  
+  const netEarningsPerSession = TOTAL_PRICE - GYM_FEE - platformFee - pgFee;
 
   return (
     <div className="pb-20 bg-slate-950 text-slate-50">
@@ -193,7 +200,7 @@ export const TrainerPromoPage: React.FC = () => {
                               <div className="flex justify-between items-end border-t border-white/10 pt-3">
                                   <div>
                                       <span className="font-bold text-xl text-neon-400 tracking-tight">
-                                        {SESSION_PRICE.toLocaleString()}원
+                                        {TOTAL_PRICE.toLocaleString()}원
                                       </span>
                                       <span className="text-[10px] text-slate-500 block uppercase tracking-wider">결제 완료</span>
                                   </div>
@@ -211,7 +218,7 @@ export const TrainerPromoPage: React.FC = () => {
           <div className="max-w-4xl mx-auto px-4 text-center">
               <h2 className="text-3xl font-bold mb-12 text-white">이번 달, 예상 수익 계산기</h2>
               
-              <div className="bg-slate-950 rounded-[2rem] p-8 md:p-14 border border-white/5 shadow-2xl relative overflow-hidden text-left">
+              <div className="bg-slate-900 rounded-[2rem] p-8 md:p-14 border border-white/5 shadow-2xl relative overflow-hidden text-left">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-neon-500/5 rounded-full blur-[80px]"></div>
 
                   <div className="grid md:grid-cols-2 gap-12 mb-12 relative z-10">
@@ -260,7 +267,7 @@ export const TrainerPromoPage: React.FC = () => {
                        <div className="text-center md:text-left">
                            <div className="text-slate-500 text-xs uppercase tracking-wider mb-1">예상 월 매출</div>
                            <div className="text-2xl font-bold text-slate-400">
-                               {(sessionsPerDay * SESSION_PRICE * workingDays).toLocaleString()}원
+                               {(sessionsPerDay * TOTAL_PRICE * workingDays).toLocaleString()}원
                            </div>
                        </div>
                        <div className="hidden md:block w-px h-16 bg-white/10"></div>
@@ -270,8 +277,8 @@ export const TrainerPromoPage: React.FC = () => {
                                {(Math.floor(netEarningsPerSession * sessionsPerDay * workingDays)).toLocaleString()}<span className="text-2xl text-slate-500 ml-1 font-medium">원</span>
                            </div>
                            <div className="text-xs text-slate-500 mt-3 space-y-1">
-                               <p>• PG사 수수료 (3.3%) 제외</p>
-                               <p>• 플랫폼 수수료 (10%) + 헬스장 공간 사용료 (5%) 제외</p>
+                               <p>• 관장님(헬스장) 수수료 6,000원 공제</p>
+                               <p>• 플랫폼 수수료 10% + PG 수수료 3.3% 공제</p>
                            </div>
                        </div>
                   </div>

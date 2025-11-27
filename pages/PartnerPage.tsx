@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 import { TrendingUp, BarChart3, CheckCircle, Phone, Monitor, DollarSign, Users, Tablet, Bell, CalendarClock, Database, Target, ArrowRight, Lightbulb, ShieldCheck } from 'lucide-react';
@@ -146,7 +145,7 @@ export const PartnerPage: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 relative z-10 pt-10">
         <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: DollarSign, title: '공간 사용료 수익', desc: '외부 트레이너가 허용되는 "오픈 플랫폼(직영 전환 등)" 도입 시, 매칭 건당 공간 사용료를 지급하여 고정비 부담을 낮춥니다.', highlight: '건당 매출의 5% (외부 허용 시)', color: 'text-neon-400', bg: 'bg-slate-800' },
+              { icon: DollarSign, title: '공간 사용료 수익', desc: '외부 전문가(SPOT PRO)가 시설 이용 시, 추가 요금과 트레이너 분담금을 합산하여 건당 수익을 제공합니다.', highlight: '건당 6,000원 수익', color: 'text-neon-400', bg: 'bg-slate-800' },
               { icon: Users, title: '고객 유입 퍼널 확장', desc: '부담 없는 1회성 이용 경험은 잠재 고객을 유입시키고, 장기 회원으로 전환하는 효과적인 마케팅 수단입니다.', highlight: '상담 전환율 유의미한 상승', color: 'text-blue-400', bg: 'bg-slate-800' },
               { icon: Database, title: '마케팅 비용 절감', desc: '별도의 하드웨어(키오스크) 없이 웹/앱 기반으로 즉시 도입 가능하며, 불필요한 전단지 광고 비용을 제거합니다.', highlight: '초기 도입 비용 0원', color: 'text-purple-400', bg: 'bg-slate-900 border-neon-500' }
             ].map((card, idx) => (

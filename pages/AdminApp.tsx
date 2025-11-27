@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
 import { Users, DollarSign, UserPlus, Award, Clock, Settings, LayoutGrid, Trash2, Plus, XCircle, Calendar } from 'lucide-react';
@@ -69,7 +70,7 @@ export const AdminApp: React.FC = () => {
       imageUrl: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       available: true,
       rating: 5.0,
-      gymName: '본점',
+      gymName: DataStore.getGymName(),
       weeklySchedule: newTrainerSchedule
     };
     const updated = [...trainers, trainer];
@@ -497,7 +498,7 @@ export const AdminApp: React.FC = () => {
                <div className="w-8 h-8 rounded-full bg-neon-400 flex items-center justify-center text-slate-900 font-bold">M</div>
                <div>
                   <div className="text-sm font-bold text-white">Manager</div>
-                  <div className="text-xs text-slate-500">SPOT 피트니스 강남본점</div>
+                  <div className="text-xs text-slate-500">{DataStore.getGymName()}</div>
                </div>
             </div>
             <div className="text-[10px] text-slate-500 mt-2 flex items-center">

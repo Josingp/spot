@@ -20,7 +20,7 @@ const INITIAL_TRAINERS: Trainer[] = [
     weeklySchedule: DEFAULT_SCHEDULE
   },
   { 
-    id: '2', name: '이수진', specialty: '머신 티칭/라인', rating: 4.8, available: true, imageUrl: 'https://images.unsplash.com/photo-1611672585731-fa1060a7a9c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: GYM_NAME, isSpotPro: false,
+    id: '2', name: '이수진', specialty: '머신 티칭/라인', rating: 4.8, available: true, imageUrl: 'https://images.unsplash.com/photo-1609132718484-cc90be34e790?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: GYM_NAME, isSpotPro: false,
     weeklySchedule: DEFAULT_SCHEDULE
   },
   { 
@@ -51,6 +51,8 @@ const KEYS = {
 // --- API ---
 
 export const DataStore = {
+  getGymName: () => GYM_NAME,
+
   // Trainers
   getTrainers: (): Trainer[] => {
     const stored = localStorage.getItem(KEYS.TRAINERS);

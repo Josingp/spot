@@ -161,7 +161,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* NFC Visual Experience Section (Revised) */}
+      {/* NFC Visual Experience Section */}
       <section className="py-24 bg-slate-900 relative overflow-hidden border-b border-white/5">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center mb-16">
@@ -268,7 +268,7 @@ export const LandingPage: React.FC = () => {
          </div>
       </section>
 
-      {/* Benefits Grid (Updated) */}
+      {/* Benefits Grid */}
       <section className="py-24 bg-slate-900/50 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -403,7 +403,7 @@ export const LandingPage: React.FC = () => {
           </div>
       </section>
 
-      {/* SPOT PRO Highlight (Replacing User Flow) */}
+      {/* SPOT PRO Highlight */}
       <section className="px-4 sm:px-6 lg:px-8 py-24 bg-slate-900">
         <div className="max-w-7xl mx-auto glass-panel rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
           {/* Background Glow */}

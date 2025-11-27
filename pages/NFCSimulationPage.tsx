@@ -1,11 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Nfc, MapPin, ChevronRight, Star, Lock, ArrowLeft, Loader2, CheckCircle, CreditCard } from 'lucide-react';
+import { Nfc, MapPin, ChevronRight, Star, Lock, ArrowLeft, Loader2, CheckCircle, CreditCard, Clock, Zap } from 'lucide-react';
+import { DataStore } from '../utils/dataStore';
 
-// Mock Data for Simulation
+// Mock Data for Simulation - Updated with valid image for Lee Su-jin
 const SIM_TRAINERS = [
   { id: 't1', name: '김태우', specialty: '3대 운동', rating: 4.9, image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', status: 'AVAILABLE', isSpotPro: true },
-  { id: 't2', name: '이수진', specialty: '머신 티칭', rating: 4.8, image: 'https://images.unsplash.com/photo-1611672585731-fa1060a7a9c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', status: 'AVAILABLE', isSpotPro: false },
+  { id: 't2', name: '이수진', specialty: '머신 티칭', rating: 4.8, image: 'https://images.unsplash.com/photo-1609132718484-cc90be34e790?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', status: 'AVAILABLE', isSpotPro: false },
 ];
 
 export const NFCSimulationPage: React.FC = () => {
@@ -14,6 +16,7 @@ export const NFCSimulationPage: React.FC = () => {
   const [selectedService, setSelectedService] = useState('');
   const [selectedTrainer, setSelectedTrainer] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [gymName, setGymName] = useState(DataStore.getGymName());
 
   // Auto transition from scan to service
   useEffect(() => {
@@ -51,12 +54,17 @@ export const NFCSimulationPage: React.FC = () => {
     }, 2000);
   };
 
+  const getPrice = (isPro: boolean) => {
+     if (isPro) return 28000;
+     return 25000;
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center p-4 font-sans">
       <div className="w-full max-w-md bg-slate-950 flex flex-col h-[90vh] max-h-[800px] border border-white/10 rounded-[2.5rem] relative shadow-2xl overflow-hidden">
         
         {/* Header */}
-        <div className="p-5 flex items-center border-b border-white/10 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="p-5 flex items-center border-b border-white/10 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 flex-shrink-0">
           <button onClick={() => navigate('/')} className="p-2 -ml-2 text-slate-400 hover:text-white rounded-full hover:bg-white/5 transition-colors">
             <ArrowLeft size={20}/>
           </button>
@@ -64,7 +72,7 @@ export const NFCSimulationPage: React.FC = () => {
         </div>
 
         {/* Content Area - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
+        <div className="flex-1 overflow-y-auto p-6 scrollbar-hide min-h-0">
           
           {/* STEP 1: SCAN */}
           {step === 'scan' && (
@@ -82,6 +90,7 @@ export const NFCSimulationPage: React.FC = () => {
                    <div className="text-left flex-1 min-w-0">
                        <div className="text-xs text-slate-500 uppercase font-bold tracking-wider mb-0.5">Current Location</div>
                        <span className="text-lg font-bold text-white truncate block">프리웨이트존</span>
+                       <span className="text-[10px] text-slate-500 truncate block">{gymName}</span>
                    </div>
                </div>
                <p className="mt-8 text-slate-500 text-sm animate-pulse">서비스 화면으로 이동 중...</p>
@@ -117,6 +126,7 @@ export const NFCSimulationPage: React.FC = () => {
                 <div className="mb-2">
                    <span className="inline-block bg-neon-400/10 text-neon-400 text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wider">{selectedService}</span>
                    <h2 className="text-2xl font-bold text-white">트레이너 선택</h2>
+                   <p className="text-slate-400 text-sm">현재 호출 가능한 전문가 목록입니다.</p>
                 </div>
                 
                 <div className="space-y-4">
@@ -124,33 +134,51 @@ export const NFCSimulationPage: React.FC = () => {
                       <div 
                         key={t.id}
                         onClick={() => handleTrainerSelect(t)}
-                        className="w-full p-4 bg-slate-800 rounded-3xl border border-white/5 hover:border-neon-400 cursor-pointer transition-all flex items-center space-x-4 group active:bg-slate-700"
+                        className={`w-full p-4 rounded-3xl border cursor-pointer transition-all flex items-center space-x-4 group active:bg-slate-700 relative overflow-hidden ${t.isSpotPro ? 'bg-purple-900/10 border-purple-500/30 hover:border-purple-500' : 'bg-slate-800 border-white/5 hover:border-neon-400'}`}
                       >
-                         <img src={t.image} className="w-16 h-16 rounded-2xl object-cover border border-white/10 flex-shrink-0" alt={t.name} />
+                         {/* Visual Tag for Pro */}
+                         {t.isSpotPro && (
+                           <div className="absolute top-0 left-0 bg-purple-500 text-white text-[9px] font-bold px-2 py-1 rounded-br-xl z-20">
+                             SPOT PRO
+                           </div>
+                         )}
+
+                         <img src={t.image} className="w-16 h-16 rounded-2xl object-cover border border-white/10 flex-shrink-0 bg-slate-700" alt={t.name} />
+                         
                          <div className="flex-1 min-w-0">
-                            <div className="flex justify-between items-start mb-1">
-                               <div className="flex flex-col">
+                            <div className="flex justify-between items-start mb-1 gap-2">
+                               <div className="flex flex-col min-w-0">
                                   <div className="flex items-center gap-1.5">
                                     <h3 className="font-bold text-lg text-white truncate">{t.name}</h3>
-                                    {t.isSpotPro && (
-                                       <span className="flex-shrink-0 text-[9px] bg-purple-500/20 text-purple-400 border border-purple-500/50 px-1.5 py-0.5 rounded font-bold flex items-center">
-                                          <Star size={8} className="mr-0.5 fill-purple-400" /> PRO
-                                       </span>
-                                    )}
                                   </div>
                                   <div className="text-xs text-slate-400 truncate">{t.specialty}</div>
                                </div>
-                               <span className="flex-shrink-0 text-[10px] bg-slate-900 text-neon-400 px-2 py-1 rounded font-bold border border-neon-500/30">3분 이내</span>
+                               
+                               {/* Price Display */}
+                               <div className="text-right flex flex-col items-end flex-shrink-0">
+                                  <span className={`font-bold text-lg leading-none ${t.isSpotPro ? 'text-purple-400' : 'text-white'}`}>
+                                    {getPrice(t.isSpotPro).toLocaleString()}원
+                                  </span>
+                                  {t.isSpotPro ? (
+                                    <span className="text-[10px] text-purple-300 font-medium bg-purple-500/20 px-1 rounded mt-1">+3,000원</span>
+                                  ) : (
+                                    <span className="text-[10px] text-slate-500 mt-1">기본가</span>
+                                  )}
+                               </div>
                             </div>
-                            <div className="flex items-center space-x-2 mt-2">
-                               <span className="text-xs text-yellow-400 flex items-center font-bold">★ {t.rating}</span>
-                               <span className="text-slate-600 text-xs">|</span>
-                               <span className="text-xs text-slate-400">후기 120+</span>
+
+                            <div className="flex items-center justify-between mt-3">
+                               <div className="flex items-center space-x-2 min-w-0">
+                                  <span className="text-xs text-yellow-400 flex items-center font-bold flex-shrink-0">★ {t.rating}</span>
+                                  <span className="text-slate-600 text-xs">|</span>
+                                  <span className="text-xs text-slate-400 truncate">후기 120+</span>
+                               </div>
+                               <div className="flex items-center text-[10px] text-slate-400 flex-shrink-0">
+                                  <Clock size={10} className="mr-1" />
+                                  <span>3분 이내 도착</span>
+                               </div>
                             </div>
                          </div>
-                         <button className="flex-shrink-0 bg-slate-700 text-white p-2 rounded-full group-hover:bg-neon-400 group-hover:text-slate-900 transition-colors">
-                             <ChevronRight size={18} />
-                         </button>
                       </div>
                    ))}
                 </div>
@@ -186,9 +214,9 @@ export const NFCSimulationPage: React.FC = () => {
                 
                 <div className="bg-slate-800 p-6 rounded-[2rem] border border-white/5 mb-6 shadow-xl w-full">
                    <div className="flex justify-between mb-6 pb-6 border-b border-white/10">
-                      <div>
+                      <div className="min-w-0 flex-1 pr-4">
                           <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Service</div>
-                          <div className="font-bold text-white text-md truncate pr-2">{selectedService}</div>
+                          <div className="font-bold text-white text-md truncate">{selectedService}</div>
                       </div>
                       <div className="text-right">
                           <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Trainer</div>
@@ -197,8 +225,15 @@ export const NFCSimulationPage: React.FC = () => {
                    </div>
                    <div className="flex justify-between items-center">
                       <span className="text-slate-400 text-sm">총 결제금액</span>
-                      <span className="text-2xl font-black text-neon-400">25,000원</span>
+                      <span className={`text-2xl font-black ${selectedTrainer?.isSpotPro ? 'text-purple-400' : 'text-neon-400'}`}>
+                          {getPrice(selectedTrainer?.isSpotPro).toLocaleString()}원
+                      </span>
                    </div>
+                   {selectedTrainer?.isSpotPro && (
+                      <div className="mt-3 text-xs text-purple-300 bg-purple-900/20 p-2 rounded text-center border border-purple-500/20 flex items-center justify-center">
+                         <Zap size={12} className="mr-1 fill-purple-300"/> SPOT PRO 이용 (추가요금 포함)
+                      </div>
+                   )}
                 </div>
 
                 <div className="mt-auto space-y-4 pb-4">
@@ -206,10 +241,10 @@ export const NFCSimulationPage: React.FC = () => {
                    <button 
                       onClick={handlePayment} 
                       disabled={isLoading}
-                      className="w-full bg-neon-400 text-slate-900 py-5 rounded-2xl font-bold text-lg shadow-[0_0_30px_rgba(163,230,53,0.3)] hover:bg-neon-300 disabled:opacity-50 flex items-center justify-center transition-all active:scale-95"
+                      className={`w-full py-5 rounded-2xl font-bold text-lg shadow-lg disabled:opacity-50 flex items-center justify-center transition-all active:scale-95 ${selectedTrainer?.isSpotPro ? 'bg-purple-500 text-white hover:bg-purple-400 shadow-purple-500/30' : 'bg-neon-400 text-slate-900 hover:bg-neon-300 shadow-neon-400/30'}`}
                    >
                       {isLoading ? <Loader2 className="animate-spin mr-3" /> : <CreditCard className="mr-2" size={20} />}
-                      {isLoading ? '결제 처리중...' : '25,000원 결제하기'}
+                      {isLoading ? '결제 처리중...' : `${getPrice(selectedTrainer?.isSpotPro).toLocaleString()}원 결제하기`}
                    </button>
                 </div>
              </div>
@@ -225,8 +260,8 @@ export const NFCSimulationPage: React.FC = () => {
                 <h2 className="text-3xl font-extrabold mb-4 text-white">결제 완료!</h2>
                 <div className="bg-slate-900/50 p-6 rounded-2xl border border-white/5 mb-8 w-full">
                   <p className="text-xl text-slate-300 leading-snug">
-                    <span className="text-neon-400 font-bold">{selectedTrainer?.name}</span> 트레이너가<br/>
-                    <span className="font-bold text-white border-b-2 border-neon-500/50">프리웨이트존</span>으로<br/> 
+                    <span className={`font-bold ${selectedTrainer?.isSpotPro ? 'text-purple-400' : 'text-neon-400'}`}>{selectedTrainer?.name}</span> 트레이너가<br/>
+                    <span className="font-bold text-white border-b-2 border-neon-500/50 pb-0.5">프리웨이트존</span>으로<br/> 
                     이동 중입니다.
                   </p>
                 </div>

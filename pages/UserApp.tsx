@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, ChevronRight, Activity, Brain, Clock, Check, Navigation, User, Monitor, AlertCircle, LayoutGrid, Dumbbell, HeartPulse, Wallet, CreditCard, X, ArrowLeft, Loader2, Nfc, Siren, Star } from 'lucide-react';
+import { Search, MapPin, ChevronRight, Activity, Brain, Clock, Check, Navigation, User, Monitor, AlertCircle, LayoutGrid, Dumbbell, HeartPulse, Wallet, CreditCard, X, ArrowLeft, Loader2, Nfc, Siren, Star, Zap } from 'lucide-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getWorkoutRecommendation, Recommendation } from '../services/geminiService';
 import { Trainer, GymServiceItem } from '../types';
@@ -37,6 +37,10 @@ export const UserApp: React.FC = () => {
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState(0);
 
+  // Constants
+  const BASE_PRICE = 25000;
+  const PRO_PRICE = 28000;
+
   // Initialization: Load User, Trainers, Services, and Check Location
   useEffect(() => {
     // 1. Load Data
@@ -45,7 +49,7 @@ export const UserApp: React.FC = () => {
     const session = DataStore.getSession();
     if (session && session.name) {
       setUserName(session.name);
-      setWalletBalance(session.balance || 25000); // Simulate pre-loaded balance from Kiosk
+      setWalletBalance(session.balance || 25000); // Simulate pre-loaded balance
     }
 
     // 2. Normal Geolocation
@@ -59,14 +63,14 @@ export const UserApp: React.FC = () => {
         (position) => {
           console.log("Found location:", position.coords);
           setTimeout(() => {
-            setCurrentGym('SPOT 피트니스 강남본점');
+            setCurrentGym(DataStore.getGymName());
             setStep('home');
           }, 1500);
         },
         (error) => {
           setGeoError("위치 정보를 가져올 수 없습니다. GPS를 켜주세요.");
           setTimeout(() => {
-            setCurrentGym('SPOT 피트니스 강남본점 (GPS 미수신)');
+            setCurrentGym(`${DataStore.getGymName()} (GPS 미수신)`);
             setStep('home');
           }, 2000);
         },
@@ -111,12 +115,14 @@ export const UserApp: React.FC = () => {
   };
 
   const handleBookingPayment = () => {
-    const PRICE = 25000;
-    if (walletBalance >= PRICE) {
-      setWalletBalance(prev => prev - PRICE);
+    if (!selectedTrainer) return;
+    const price = selectedTrainer.isSpotPro ? PRO_PRICE : BASE_PRICE;
+    
+    if (walletBalance >= price) {
+      setWalletBalance(prev => prev - price);
       setStep('booking_confirm');
     } else {
-      if (confirm('잔액이 부족합니다. 충전 페이지로 이동하시겠습니까?')) {
+      if (confirm(`잔액이 부족합니다. (${price.toLocaleString()}원 필요)\n충전 페이지로 이동하시겠습니까?`)) {
         setStep('wallet_charge');
       }
     }
@@ -473,32 +479,49 @@ export const UserApp: React.FC = () => {
                         대기중
                     </div>
                 )}
+                {trainer.isSpotPro && (
+                   <div className="absolute -top-2 -left-2 bg-purple-500 text-white text-[9px] px-2 py-1 rounded-br-lg font-bold shadow-lg z-20">
+                     SPOT PRO
+                   </div>
+                )}
               </div>
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-white text-xl">{trainer.name}</h4>
-                    {trainer.isSpotPro && (
-                       <span className="text-[10px] bg-purple-500/20 text-purple-400 border border-purple-500/50 px-1.5 py-0.5 rounded font-bold flex items-center">
-                          <Star size={8} className="mr-0.5 fill-purple-400" /> SPOT PRO
+                  <div className="flex flex-col">
+                    <h4 className="font-bold text-white text-xl flex items-center gap-2">
+                        {trainer.name}
+                    </h4>
+                    {trainer.isSpotPro ? (
+                       <span className="text-[10px] bg-purple-500/20 text-purple-400 border border-purple-500/50 px-1.5 py-0.5 rounded font-bold w-fit mt-1">
+                          프리랜서 전문가
                        </span>
+                    ) : (
+                       <span className="text-[10px] text-slate-500 mt-1">센터 소속</span>
                     )}
                   </div>
-                  {trainer.available ? (
-                     <div className="text-slate-900 bg-neon-400 text-xs font-extrabold px-2.5 py-1 rounded-md flex items-center">
-                        <Clock size={12} className="mr-1" /> {Math.floor(Math.random() * 3) + 1} MIN
+
+                  <div className="text-right">
+                     <div className={`font-bold text-lg ${trainer.isSpotPro ? 'text-purple-400' : 'text-neon-400'}`}>
+                        {(trainer.isSpotPro ? PRO_PRICE : BASE_PRICE).toLocaleString()}원
                      </div>
+                     {trainer.isSpotPro && (
+                        <div className="text-[9px] text-purple-300 font-bold">+3,000원 추가</div>
+                     )}
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between mt-3">
+                  <div className="text-slate-400 text-sm flex items-center">
+                      <MapPin size={14} className="mr-1 text-slate-500" /> 
+                      {trainer.isSpotPro ? 'SPOT 프리랜서' : currentGym?.split(' ')[0] || '센터'}
+                  </div>
+                  {trainer.available ? (
+                      <div className="text-slate-900 bg-neon-400 text-[10px] font-extrabold px-2 py-1 rounded-md flex items-center">
+                          <Clock size={10} className="mr-1" /> 3 MIN
+                      </div>
                   ) : (
-                      <div className="text-slate-500 text-xs font-bold bg-slate-800 px-2 py-1 rounded">BUSY</div>
+                      <div className="text-slate-500 text-[10px] font-bold bg-slate-800 px-2 py-1 rounded">BUSY</div>
                   )}
-                </div>
-                <div className="text-slate-400 text-sm flex items-center mb-3">
-                    <MapPin size={14} className="mr-1 text-slate-500" /> 
-                    {trainer.isSpotPro ? 'SPOT 프리랜서' : currentGym?.split(' ')[0] || '센터'}
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs bg-slate-800 border border-white/10 px-2.5 py-1 rounded text-slate-300">{trainer.specialty}</span>
-                  <span className="text-xs text-yellow-400 font-bold flex items-center"><span className="text-slate-600 mr-1">|</span> ★ {trainer.rating}</span>
                 </div>
               </div>
             </div>
@@ -517,10 +540,12 @@ export const UserApp: React.FC = () => {
             <button
             onClick={() => selectedTrainer && handleBookingPayment()}
             disabled={!selectedTrainer}
-            className="w-full bg-neon-400 text-slate-900 py-4 rounded-xl font-bold text-xl disabled:bg-slate-800 disabled:text-slate-600 shadow-[0_0_20px_rgba(163,230,53,0.2)] disabled:shadow-none"
+            className={`w-full py-4 rounded-xl font-bold text-xl disabled:bg-slate-800 disabled:text-slate-600 disabled:shadow-none shadow-[0_0_20px_rgba(163,230,53,0.2)] ${selectedTrainer?.isSpotPro ? 'bg-purple-500 text-white hover:bg-purple-400' : 'bg-neon-400 text-slate-900 hover:bg-neon-300'}`}
             >
             {selectedTrainer 
-                ? (walletBalance >= 25000 ? '25,000P 결제 및 호출' : '잔액 부족 (충전하기)')
+                ? (walletBalance >= (selectedTrainer.isSpotPro ? PRO_PRICE : BASE_PRICE) 
+                    ? `${(selectedTrainer.isSpotPro ? PRO_PRICE : BASE_PRICE).toLocaleString()}원 결제 및 호출` 
+                    : '잔액 부족 (충전하기)')
                 : '트레이너를 선택해주세요'}
             </button>
          </div>
@@ -539,7 +564,7 @@ export const UserApp: React.FC = () => {
       <div className="text-center mb-10">
         <h2 className="text-4xl font-extrabold text-white mb-3">호출 완료!</h2>
         <p className="text-slate-400 text-lg">
-            <span className="font-bold text-neon-400">{selectedTrainer?.name}</span> 트레이너가<br/>
+            <span className={`font-bold ${selectedTrainer?.isSpotPro ? 'text-purple-400' : 'text-neon-400'}`}>{selectedTrainer?.name}</span> 트레이너가<br/>
             <span className="text-white font-bold border-b border-neon-500/50 pb-0.5">{myLocationInGym}</span>(으)로 이동합니다.
         </p>
       </div>
@@ -566,7 +591,9 @@ export const UserApp: React.FC = () => {
              <div className="flex justify-between items-center">
                 <span className="text-slate-500 text-sm">결제 금액</span>
                 <div className="text-right">
-                    <div className="font-bold text-neon-400 text-lg">25,000 P</div>
+                    <div className={`font-bold text-lg ${selectedTrainer?.isSpotPro ? 'text-purple-400' : 'text-neon-400'}`}>
+                        {(selectedTrainer?.isSpotPro ? PRO_PRICE : BASE_PRICE).toLocaleString()} P
+                    </div>
                 </div>
             </div>
         </div>
