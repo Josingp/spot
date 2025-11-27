@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, Monitor, DollarSign, ArrowRight, Zap, TrendingUp, Megaphone, Lock, QrCode, ArrowLeftRight, CheckCircle, Phone, Trophy, Activity, Target, Smartphone, CreditCard, UserPlus, Clock, Database, Download, Nfc, Wifi, ChevronRight, UserCheck, Star, Search, UserX } from 'lucide-react';
@@ -41,7 +40,7 @@ export const LandingPage: React.FC = () => {
                   </span>
                 </h1>
                 <p className="text-lg text-slate-400 max-w-lg mx-auto md:mx-0 leading-relaxed font-light">
-                  전통적인 50분 세션의 부담을 없앴습니다.<br/>
+                  전통적인 60분 세션의 부담을 없앴습니다.<br/>
                   필요한 부위만 집중 타격하는 포인트 레슨.<br/>
                   <strong className="text-white">합리적인 비용</strong>으로 전문가의 코칭을 경험하세요.
                 </p>
@@ -166,7 +165,7 @@ export const LandingPage: React.FC = () => {
       <section className="py-24 bg-slate-900 relative overflow-hidden border-b border-white/5">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center mb-16">
-               <span className="text-neon-400 font-bold tracking-widest text-xs uppercase mb-2 block animate-pulse">On-site Experience</span>
+              
                <h2 className="text-4xl font-extrabold text-white mb-4">
                   "남들은 자극 온다는데, 왜 나만 관절이 아플까?"<br/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-300 to-green-400">핸드폰을 '툭' 대세요</span>
@@ -177,7 +176,10 @@ export const LandingPage: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center justify-center gap-16">
                
                {/* Sticker Container with Animation */}
-               <div className="relative group w-80 h-80 flex-shrink-0">
+               <div 
+                 onClick={() => navigate('/nfc-simulation')} 
+                 className="relative group w-80 h-80 flex-shrink-0 cursor-pointer"
+               >
                    {/* Phone Animation Overlay */}
                    <div className="absolute z-30 pointer-events-none top-0 left-0 w-full h-full flex items-center justify-center">
                        <div className="w-28 h-56 bg-slate-800 rounded-[2rem] border-4 border-slate-600 shadow-2xl transform transition-all duration-[2000ms] ease-in-out opacity-0 animate-[tap-phone_4s_infinite]">
@@ -197,10 +199,10 @@ export const LandingPage: React.FC = () => {
                    <div className="w-full h-full rounded-full overflow-hidden relative shadow-[0_20px_60px_rgba(163,230,53,0.3)] border-2 border-white/10 transform transition-transform duration-300 hover:scale-105">
                       {/* Top Half: Lime (65%) */}
                       <div className="absolute top-0 left-0 w-full h-[65%] bg-[#a3e635] flex flex-col items-center justify-center pt-2">
-                          <h3 className="text-4xl font-black text-white leading-none text-center tracking-tighter drop-shadow-md mb-2">
+                          <h3 className="text-5xl font-black text-white leading-none text-center tracking-tighter drop-shadow-md mb-2">
                               지금 바로
                           </h3>
-                          <h2 className="text-7xl font-black text-white leading-none text-center tracking-tighter drop-shadow-md z-10 pb-6">
+                          <h2 className="text-6xl font-black text-white leading-none text-center tracking-tighter drop-shadow-md z-10 pb-6">
                               코치 소환!
                           </h2>
                           
@@ -213,12 +215,12 @@ export const LandingPage: React.FC = () => {
                       {/* Bottom Half: Dark Grey (35%) */}
                       <div className="absolute bottom-0 left-0 w-full h-[35%] bg-[#2c2c2c] flex items-center justify-between px-8 pb-3">
                            <div className="text-white text-left">
-                               <div className="text-xs font-bold leading-tight opacity-90">30분만 받아보세요,</div>
-                               <div className="text-lg font-black leading-tight mt-0.5">   운동이 바뀝니다.</div>
+                               <div className="text-xs font-bold leading-tight opacity-90 ml-3">30분만 받아보세요,</div>
+                               <div className="text-lg font-black leading-tight mt-0.5 ml-3">   운동이 바뀝니다.</div>
                            </div>
                            
                            {/* QR Code */}
-                           <div className="bg-white p-1 rounded-sm">
+                           <div className="bg-white p-1 rounded-sm mr-6">
                               <QrCode size={36} className="text-slate-900" />
                            </div>
                       </div>
@@ -226,7 +228,7 @@ export const LandingPage: React.FC = () => {
                       {/* Floating Capsule (Between Two Colors) */}
                       <div className="absolute top-[65%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full px-6 py-2.5 flex items-center shadow-xl z-20 whitespace-nowrap">
                            <Nfc size={20} className="text-slate-900 mr-2" />
-                           <span className="text-slate-900 font-extrabold text-sm tracking-tighter">여기 대면 바로 시작!</span>
+                           <span className="text-slate-900 font-extrabold text-sm tracking-tighter">현재위치 : 프리웨이트존</span>
                       </div>
                    </div>
                </div>
@@ -257,7 +259,7 @@ export const LandingPage: React.FC = () => {
                          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center font-bold text-white text-lg mr-5 border-4 border-slate-800 shadow-lg relative z-10">3</div>
                          <div className="pt-1">
                             <h3 className="text-xl font-bold text-white mb-2">트레이너 도착</h3>
-                            <p className="text-slate-400">간편 가입 후 결제가 완료되면, 트레이너가 회원님의 위치로 즉시 도착합니다.</p>
+                            <p className="text-slate-400">결제 완료 즉시, 트레이너가 회원님의 위치로 도착합니다.</p>
                          </div>
                       </div>
                   </div>
@@ -294,6 +296,113 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Sports Expansion Section */}
+      <section className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+             <span className="text-neon-400 font-bold tracking-widest text-xs uppercase mb-2 block">Expansion Strategy</span>
+             <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-2 mb-4">
+               확장성
+             </h2>
+             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+               '포인트 레슨' 모델은 헬스장을 넘어 다양한 스포츠 분야로 적용됩니다.
+             </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+             {[
+               { icon: Target, title: '골프', text: '드라이버 슬라이스 교정', sub: '30분 원포인트', color: 'text-green-400', bg: 'bg-green-500/10' },
+               { icon: Activity, title: '테니스', text: '서브 자세 집중 케어', sub: '코트 위 즉시 호출', color: 'text-orange-400', bg: 'bg-orange-500/10' },
+               { icon: Trophy, title: '축구', text: '슈팅 메커니즘 전수', sub: '선수 출신 코치', color: 'text-blue-400', bg: 'bg-blue-500/10' },
+               { icon: ArrowRight, title: 'More Sports...', text: '필라테스, 수영 등', sub: '모든 분야 확장 예정', color: 'text-slate-500', bg: 'bg-slate-800/50' }
+             ].map((sport, idx) => (
+               <div key={idx} className="glass-card p-6 rounded-2xl hover:border-neon-500/50 transition-all group cursor-default">
+                  <div className={`w-12 h-12 ${sport.bg} ${sport.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                     <sport.icon size={24} />
+                  </div>
+                  <h3 className="font-bold text-lg mb-2 text-white">{sport.title}</h3>
+                  <p className="text-sm text-slate-400 mb-1">{sport.text}</p>
+                  <span className="text-xs font-bold text-neon-400">{sport.sub}</span>
+               </div>
+             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SPOT STATION Section */}
+      <section className="py-32 bg-slate-950 relative overflow-hidden">
+          {/* Decorative BG */}
+          <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-gradient-to-r from-neon-600/10 to-transparent rounded-full blur-[120px] transform -translate-y-1/2 -translate-x-1/2"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div className="flex flex-col md:flex-row items-center gap-16">
+                  <div className="md:w-1/2">
+                      <div className="inline-flex items-center bg-neon-400/10 border border-neon-400/20 text-neon-300 text-xs font-bold px-3 py-1 rounded-full mb-6">
+                        <Lock size={12} className="mr-2" /> 직영점 전용
+                      </div>
+                      <h2 className="text-4xl md:text-5xl font-extrabold mb-8 leading-tight text-white">
+                          SPOT STATION(도입예정)<br/>
+                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 text-3xl md:text-4xl">
+                              직영점 시범 운영
+                          </span>
+                      </h2>
+                      <p className="text-slate-400 text-lg mb-10 max-w-lg leading-relaxed font-light">
+                          "헬스장 회원권 0원, 그 대신 트레이너의 열정을 견디세요."<br/>
+                          SPOT 직영점은 외부 트레이너의 활동이 허용되는<br/>
+                          <strong className="text-white">국내 유일의 오픈 트레이닝 플랫폼</strong>입니다.
+                      </p>
+                      
+                      <div className="space-y-4">
+                          {[
+                            { icon: Megaphone, title: '외부 트레이너 활동 허용', desc: '운동 중 프리랜서 트레이너가 다가와 티칭을 제안할 수 있습니다. (직영점 및 허용 가맹점 한정)', color: 'text-blue-400' },
+                            { icon: ArrowLeftRight, title: '지속 가능한 무료 모델', desc: '입장료 수익을 포기하는 대신, 높은 SPOT 호출 거래량과 트레이너 입점비를 통한 수익 다각화를 실현했습니다.', color: 'text-neon-400' }
+                          ].map((feat, idx) => (
+                            <div key={idx} className="flex items-start bg-slate-900/50 p-5 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
+                                <div className={`flex-shrink-0 w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center ${feat.color} mr-5`}>
+                                    <feat.icon size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-lg mb-1 text-white">{feat.title}</h4>
+                                    <p className="text-slate-500 text-sm leading-relaxed">{feat.desc}</p>
+                                </div>
+                            </div>
+                          ))}
+                      </div>
+                      <p className="mt-6 text-xs text-slate-600 border-l-2 border-slate-700 pl-3">
+                        * 외부 트레이너 활동 허용 정책은 현재 <strong>SPOT 직영점(SPOT STATION)</strong>에서만 시행됩니다.<br/>
+                        일반 가맹점(제휴 헬스장)은 추후 도입 예정입니다.
+                      </p>
+                  </div>
+                  <div className="md:w-1/2 relative">
+                      <div className="glass-panel p-2 rounded-[2rem] shadow-2xl relative transform rotate-2 hover:rotate-0 transition-all duration-500">
+                          <div className="absolute -top-6 -right-6 bg-neon-400 text-slate-900 font-extrabold px-6 py-3 rounded-2xl shadow-lg transform rotate-6 z-20 border-4 border-slate-900">
+                              Grand Opening
+                          </div>
+                          <div className="rounded-[1.5rem] overflow-hidden relative">
+                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-10"></div>
+                             <img 
+                                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                                alt="Gym Interior" 
+                                className="w-full h-auto object-cover opacity-80 hover:scale-105 transition-transform duration-700"
+                             />
+                             <div className="absolute bottom-0 left-0 w-full p-8 z-20">
+                                <div className="flex items-center text-white font-bold mb-3">
+                                   <QrCode size={20} className="mr-2 text-neon-400"/>
+                                   <span>직영점 입장 조건</span>
+                                </div>
+                                <div className="text-sm text-slate-300 space-y-1 pl-7 border-l-2 border-neon-500/30">
+                                   <p>• SPOT 앱 설치 및 회원가입 필수</p>
+                                   <p>• 결제 수단(카드) 등록 필수</p>
+                                   <p>• 신원 인증 완료 회원 전용</p>
+                                </div>
+                             </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
       {/* SPOT PRO Highlight (Replacing User Flow) */}
       <section className="px-4 sm:px-6 lg:px-8 py-24 bg-slate-900">
         <div className="max-w-7xl mx-auto glass-panel rounded-[2.5rem] p-8 md:p-16 relative overflow-hidden">
@@ -303,7 +412,7 @@ export const LandingPage: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-16 items-center relative z-10">
               <div className="order-2 md:order-1">
                   <div className="inline-flex items-center px-4 py-2 rounded-full bg-neon-400/10 border border-neon-400/20 text-neon-400 text-xs font-bold mb-6">
-                     <Star size={12} className="mr-2 fill-neon-400" /> SPOT PRO
+                     <Star size={12} className="mr-2 fill-neon-400" /> SPOT PRO (도입예정)
                   </div>
                   <h2 className="text-3xl md:text-5xl font-extrabold mb-8 text-white leading-tight">
                      센터 트레이너가<br/>모두 바쁘다면?
@@ -409,197 +518,6 @@ export const LandingPage: React.FC = () => {
                    </div>
               </div>
           </div>
-        </div>
-      </section>
-
-      {/* Sports Expansion Section */}
-      <section className="py-24 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-             <span className="text-neon-400 font-bold tracking-widest text-xs uppercase mb-2 block">Expansion Strategy</span>
-             <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-2 mb-4">
-               확장성 (Scalability)
-             </h2>
-             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-               '포인트 레슨' 모델은 헬스장을 넘어 다양한 스포츠 분야로 적용됩니다.
-             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-             {[
-               { icon: Target, title: '골프', text: '드라이버 슬라이스 교정', sub: '30분 원포인트', color: 'text-green-400', bg: 'bg-green-500/10' },
-               { icon: Activity, title: '테니스', text: '서브 자세 집중 케어', sub: '코트 위 즉시 호출', color: 'text-orange-400', bg: 'bg-orange-500/10' },
-               { icon: Trophy, title: '축구', text: '슈팅 메커니즘 전수', sub: '선수 출신 코치', color: 'text-blue-400', bg: 'bg-blue-500/10' },
-               { icon: ArrowRight, title: 'More Sports...', text: '필라테스, 수영 등', sub: '모든 분야 확장 예정', color: 'text-slate-500', bg: 'bg-slate-800/50' }
-             ].map((sport, idx) => (
-               <div key={idx} className="glass-card p-6 rounded-2xl hover:border-neon-500/50 transition-all group cursor-default">
-                  <div className={`w-12 h-12 ${sport.bg} ${sport.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                     <sport.icon size={24} />
-                  </div>
-                  <h3 className="font-bold text-lg mb-2 text-white">{sport.title}</h3>
-                  <p className="text-sm text-slate-400 mb-1">{sport.text}</p>
-                  <span className="text-xs font-bold text-neon-400">{sport.sub}</span>
-               </div>
-             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SPOT STATION Section */}
-      <section className="py-32 bg-slate-950 relative overflow-hidden">
-          {/* Decorative BG */}
-          <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-gradient-to-r from-neon-600/10 to-transparent rounded-full blur-[120px] transform -translate-y-1/2 -translate-x-1/2"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              <div className="flex flex-col md:flex-row items-center gap-16">
-                  <div className="md:w-1/2">
-                      <div className="inline-flex items-center bg-neon-400/10 border border-neon-400/20 text-neon-300 text-xs font-bold px-3 py-1 rounded-full mb-6">
-                        <Lock size={12} className="mr-2" /> 직영점 전용
-                      </div>
-                      <h2 className="text-4xl md:text-5xl font-extrabold mb-8 leading-tight text-white">
-                          SPOT STATION<br/>
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400 text-3xl md:text-4xl">
-                              직영점 시범 운영
-                          </span>
-                      </h2>
-                      <p className="text-slate-400 text-lg mb-10 max-w-lg leading-relaxed font-light">
-                          "헬스장 회원권 0원, 그 대신 트레이너의 열정을 견디세요."<br/>
-                          SPOT 직영점은 외부 트레이너의 활동이 허용되는<br/>
-                          <strong className="text-white">국내 유일의 오픈 트레이닝 플랫폼</strong>입니다.
-                      </p>
-                      
-                      <div className="space-y-4">
-                          {[
-                            { icon: Megaphone, title: '외부 트레이너 활동 허용', desc: '운동 중 프리랜서 트레이너가 다가와 티칭을 제안할 수 있습니다. (직영점 및 허용 가맹점 한정)', color: 'text-blue-400' },
-                            { icon: ArrowLeftRight, title: '지속 가능한 무료 모델', desc: '입장료 수익을 포기하는 대신, 높은 SPOT 호출 거래량과 트레이너 입점비를 통한 수익 다각화를 실현했습니다.', color: 'text-neon-400' }
-                          ].map((feat, idx) => (
-                            <div key={idx} className="flex items-start bg-slate-900/50 p-5 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
-                                <div className={`flex-shrink-0 w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center ${feat.color} mr-5`}>
-                                    <feat.icon size={20} />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-lg mb-1 text-white">{feat.title}</h4>
-                                    <p className="text-slate-500 text-sm leading-relaxed">{feat.desc}</p>
-                                </div>
-                            </div>
-                          ))}
-                      </div>
-                      <p className="mt-6 text-xs text-slate-600 border-l-2 border-slate-700 pl-3">
-                        * 외부 트레이너 활동 허용 정책은 현재 <strong>SPOT 직영점(SPOT STATION)</strong>에서만 시행됩니다.<br/>
-                        일반 가맹점(제휴 헬스장)은 추후 도입 예정입니다.
-                      </p>
-                  </div>
-                  <div className="md:w-1/2 relative">
-                      <div className="glass-panel p-2 rounded-[2rem] shadow-2xl relative transform rotate-2 hover:rotate-0 transition-all duration-500">
-                          <div className="absolute -top-6 -right-6 bg-neon-400 text-slate-900 font-extrabold px-6 py-3 rounded-2xl shadow-lg transform rotate-6 z-20 border-4 border-slate-900">
-                              Grand Opening
-                          </div>
-                          <div className="rounded-[1.5rem] overflow-hidden relative">
-                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent z-10"></div>
-                             <img 
-                                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
-                                alt="Gym Interior" 
-                                className="w-full h-auto object-cover opacity-80 hover:scale-105 transition-transform duration-700"
-                             />
-                             <div className="absolute bottom-0 left-0 w-full p-8 z-20">
-                                <div className="flex items-center text-white font-bold mb-3">
-                                   <QrCode size={20} className="mr-2 text-neon-400"/>
-                                   <span>직영점 입장 조건</span>
-                                </div>
-                                <div className="text-sm text-slate-300 space-y-1 pl-7 border-l-2 border-neon-500/30">
-                                   <p>• SPOT 앱 설치 및 회원가입 필수</p>
-                                   <p>• 결제 수단(카드) 등록 필수</p>
-                                   <p>• 신원 인증 완료 회원 전용</p>
-                                </div>
-                             </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-
-      {/* B2B Teaser Section */}
-      <section className="bg-slate-950 pt-20 pb-32 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
-             <div className="absolute -top-20 -right-20 w-96 h-96 bg-neon-500/10 rounded-full blur-[100px]"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid md:grid-cols-2 gap-16 items-center">
-                {/* Left: Copy */}
-                <div>
-                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-yellow-500/10 text-yellow-500 text-xs font-bold mb-8 border border-yellow-500/20">
-                        <TrendingUp size={12} className="mr-2" /> 가맹점주님께
-                    </div>
-                    <h2 className="text-4xl font-bold mb-6 leading-tight text-white">
-                        유휴 트레이너 시간의<br/>
-                        <span className="text-neon-400">수익화</span>
-                    </h2>
-                    <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-                        단순한 홍보가 아닌, 실제 매출로 전환되는 시스템입니다.<br/>
-                        SPOT 관리자 시스템으로 헬스장 운영 효율을 극대화하세요.
-                    </p>
-                    
-                    <div className="space-y-5 mb-12">
-                        {[
-                          { text: '초기 시스템 도입비 0원 (Web/App 기반)', color: 'bg-neon-500' },
-                          { text: '공간 대여 수익 5% (SPOT PRO 외부 유입 시)', color: 'bg-blue-500' },
-                          { text: '잠재 고객 데이터 확보', color: 'bg-purple-500' }
-                        ].map((item, idx) => (
-                          <div key={idx} className="flex items-center group">
-                              <div className={`w-6 h-6 rounded-full ${item.color} flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform`}>
-                                  <CheckCircle size={14} className="text-white"/>
-                              </div>
-                              <span className="font-medium text-slate-300 text-lg">{item.text}</span>
-                          </div>
-                        ))}
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <button 
-                            onClick={() => navigate('/partner')}
-                            className="px-8 py-4 bg-white text-slate-900 rounded-xl font-bold text-lg hover:bg-slate-200 transition-all flex items-center justify-center"
-                        >
-                            가맹점 혜택 확인 <ArrowRight size={20} className="ml-2"/>
-                        </button>
-                    </div>
-                </div>
-
-                {/* Right: Admin Preview */}
-                <div className="relative perspective-1000">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-neon-500/20 to-blue-500/20 blur-[60px]"></div>
-                    <div className="glass-panel rounded-2xl p-2 transform rotate-y-12 rotate-x-6 hover:rotate-0 transition-all duration-700 shadow-2xl border-slate-700">
-                        <div className="bg-slate-900 rounded-xl overflow-hidden">
-                             <div className="bg-slate-800 border-b border-white/5 p-4 flex justify-between items-center">
-                                 <span className="font-bold text-slate-300 text-sm">관리자 대시보드</span>
-                                 <div className="flex space-x-1.5">
-                                     <div className="w-2.5 h-2.5 bg-red-500/50 rounded-full"></div>
-                                     <div className="w-2.5 h-2.5 bg-yellow-500/50 rounded-full"></div>
-                                     <div className="w-2.5 h-2.5 bg-green-500/50 rounded-full"></div>
-                                 </div>
-                             </div>
-                             <div className="p-8">
-                                 <div className="flex justify-between items-end mb-8">
-                                     <div>
-                                         <div className="text-xs text-slate-500 uppercase tracking-wider mb-1">총 매출</div>
-                                         <div className="text-3xl font-bold text-white">₩ 850,000</div>
-                                     </div>
-                                     <div className="text-neon-400 font-bold bg-neon-400/10 px-2 py-1 rounded text-sm">+12%</div>
-                                 </div>
-                                 <div className="space-y-4">
-                                     {[1, 2, 3].map((i) => (
-                                       <div key={i} className="h-10 bg-slate-800/50 rounded-lg w-full flex items-center px-4 border border-white/5">
-                                           <div className={`w-2 h-2 ${i===3 ? 'bg-slate-600' : 'bg-neon-500'} rounded-full mr-3`}></div>
-                                           <div className="w-1/3 h-2 bg-slate-700 rounded-full"></div>
-                                       </div>
-                                     ))}
-                                 </div>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
       </section>
 

@@ -12,17 +12,19 @@ const DEFAULT_SCHEDULE: WeeklySchedule[] = [
   { day: '일', isWorkDay: false, start: '10:00', end: '15:00' },
 ];
 
+const GYM_NAME = 'SPOT 피트니스 강남본점';
+
 const INITIAL_TRAINERS: Trainer[] = [
   { 
-    id: '1', name: '김태우', specialty: '3대 운동/교정', rating: 4.9, available: true, imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: '스포애니 강남점',
+    id: '1', name: '김태우', specialty: '3대 운동/교정', rating: 4.9, available: true, imageUrl: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: GYM_NAME, isSpotPro: true,
     weeklySchedule: DEFAULT_SCHEDULE
   },
   { 
-    id: '2', name: '이수진', specialty: '머신 티칭/라인', rating: 4.8, available: true, imageUrl: 'https://images.unsplash.com/photo-1611672585731-fa1060a7a9c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: '스포애니 강남점',
+    id: '2', name: '이수진', specialty: '머신 티칭/라인', rating: 4.8, available: true, imageUrl: 'https://images.unsplash.com/photo-1611672585731-fa1060a7a9c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: GYM_NAME, isSpotPro: false,
     weeklySchedule: DEFAULT_SCHEDULE
   },
   { 
-    id: '3', name: '박준형', specialty: '파워리프팅', rating: 5.0, available: false, imageUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: '스포애니 강남점',
+    id: '3', name: '박준형', specialty: '파워리프팅', rating: 5.0, available: false, imageUrl: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', gymName: GYM_NAME, isSpotPro: true,
     weeklySchedule: DEFAULT_SCHEDULE
   },
 ];

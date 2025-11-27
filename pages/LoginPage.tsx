@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Dumbbell, Lock, User, Monitor, Loader2 } from 'lucide-react';
 import { UserRole } from '../types';
 import { DataStore } from '../utils/dataStore';
@@ -11,6 +10,7 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [mode, setMode] = useState<'USER' | 'ADMIN'>('USER');
   const [adminId, setAdminId] = useState('');
   const [adminPw, setAdminPw] = useState('');
@@ -32,7 +32,14 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       DataStore.setSession(mockUser);
 
       onLogin(UserRole.USER);
-      navigate('/user');
+      
+      // Check for redirect param
+      const redirect = searchParams.get('redirect');
+      if (redirect) {
+          navigate(`/${redirect}`);
+      } else {
+          navigate('/user');
+      }
     }, 1500);
   };
 

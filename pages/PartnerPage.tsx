@@ -1,11 +1,16 @@
 
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { TrendingUp, BarChart3, CheckCircle, Phone, Monitor, DollarSign, Users, Tablet, PieChart, Bell, CalendarClock, Database } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from 'recharts';
+import { TrendingUp, BarChart3, CheckCircle, Phone, Monitor, DollarSign, Users, Tablet, Bell, CalendarClock, Database, Target, ArrowRight, Lightbulb, ShieldCheck } from 'lucide-react';
 
 const COMPARISON_DATA = [
   { name: '기존 헬스장', value: 30, label: 'PT 등록률 30%' },
   { name: 'SPOT 도입', value: 85, label: '서비스 이용률 85%' },
+];
+
+const MARKET_DATA = [
+  { name: '기존 PT 회원 (Target X)', value: 20, color: '#334155' }, // Slate-700
+  { name: '잠재 고객 (SPOT Target)', value: 80, color: '#bef264' }, // Neon-400
 ];
 
 export const PartnerPage: React.FC = () => {
@@ -39,8 +44,106 @@ export const PartnerPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Benefit Grid */}
+      {/* NEW SECTION: Market Creation Visuals */}
       <section className="max-w-7xl mx-auto px-4 -mt-24 relative z-10">
+         <div className="glass-panel rounded-[2.5rem] p-8 md:p-12 border border-neon-500/20 shadow-2xl relative overflow-hidden bg-slate-900/90 backdrop-blur-xl">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-neon-400 to-blue-500"></div>
+            
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+               {/* Left: Chart & Logic */}
+               <div>
+                  <h2 className="text-3xl font-bold text-white mb-6">
+                     고객을 뺏는 것이 아닙니다.<br/>
+                     <span className="text-neon-400">잠들어 있는 80%를 깨웁니다.</span>
+                  </h2>
+                  <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                     기존 PT 회원은 건드리지 않습니다.<br/>
+                     SPOT은 가격 부담으로 PT를 받지 않던 <strong>'일반 회원'</strong>을 타겟팅하여 새로운 매출을 창출합니다.
+                  </p>
+
+                  <div className="flex items-center space-x-8 mb-8">
+                     <div className="w-48 h-48 relative">
+                        <ResponsiveContainer width="100%" height="100%">
+                           <PieChart>
+                              <Pie
+                                 data={MARKET_DATA}
+                                 cx="50%"
+                                 cy="50%"
+                                 innerRadius={40}
+                                 outerRadius={80}
+                                 dataKey="value"
+                                 startAngle={90}
+                                 endAngle={-270}
+                              >
+                                 {MARKET_DATA.map((entry, index) => (
+                                    <Cell key={`cell-${index}`} fill={entry.color} stroke="rgba(0,0,0,0)" />
+                                 ))}
+                              </Pie>
+                           </PieChart>
+                        </ResponsiveContainer>
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                           <span className="text-2xl font-black text-white">80%</span>
+                        </div>
+                     </div>
+                     <div className="space-y-2">
+                        <div className="flex items-center">
+                           <div className="w-3 h-3 rounded-full bg-slate-700 mr-2"></div>
+                           <span className="text-slate-500 text-sm">기존 PT 회원 (영업 대상 아님)</span>
+                        </div>
+                        <div className="flex items-center">
+                           <div className="w-3 h-3 rounded-full bg-neon-400 mr-2 shadow-[0_0_10px_rgba(163,230,53,0.5)]"></div>
+                           <span className="text-white font-bold text-sm">SPOT 타겟 (미이용 회원)</span>
+                        </div>
+                        <div className="mt-2 p-3 bg-slate-800/50 rounded-lg border border-neon-500/30">
+                           <p className="text-xs text-neon-400 font-bold">"이들을 1회 체험으로 유도하여<br/>장기 고객으로 전환합니다."</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               {/* Right: The Conversion Bridge */}
+               <div className="bg-slate-950 p-8 rounded-3xl border border-white/5 relative">
+                  <div className="absolute -top-4 -right-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-bounce">
+                     Best Strategy
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-8 flex items-center">
+                     <Lightbulb className="text-yellow-400 mr-2 fill-yellow-400/20"/>
+                     자발적 PT 전환 프로세스
+                  </h3>
+                  
+                  <div className="space-y-6 relative">
+                     {/* Connecting Line */}
+                     <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-slate-800 -z-0"></div>
+
+                     {[
+                        { step: 1, title: '영업 저항 제로', desc: '고객이 먼저 "도와달라"고 요청합니다. (NFC 태그)', icon: Target },
+                        { step: 2, title: '30분의 실력 증명', desc: '말뿐인 상담이 아닌, 실제 티칭으로 신뢰를 쌓습니다.', icon: ShieldCheck },
+                        { step: 3, title: '자발적 등록', desc: '"더 배우고 싶어요." 고객이 스스로 장기 PT를 문의합니다.', icon: TrendingUp }
+                     ].map((item, idx) => (
+                        <div key={idx} className="relative flex items-start group">
+                           <div className="w-12 h-12 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center text-neon-400 z-10 mr-4 group-hover:scale-110 group-hover:bg-neon-400 group-hover:text-slate-900 transition-all shadow-lg">
+                              <item.icon size={20} />
+                           </div>
+                           <div className="flex-1 pt-1">
+                              <h4 className="font-bold text-white text-lg mb-1">{item.title}</h4>
+                              <p className="text-slate-400 text-sm">{item.desc}</p>
+                           </div>
+                        </div>
+                     ))}
+                  </div>
+
+                  <div className="mt-8 bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 text-center">
+                     <p className="text-blue-400 font-bold text-sm">
+                        "SPOT 경험 1회는 100번의 말보다 강력한 영업입니다."
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      {/* Benefit Grid */}
+      <section className="max-w-7xl mx-auto px-4 relative z-10 pt-10">
         <div className="grid md:grid-cols-3 gap-6">
             {[
               { icon: DollarSign, title: '공간 사용료 수익', desc: '외부 트레이너가 허용되는 "오픈 플랫폼(직영 전환 등)" 도입 시, 매칭 건당 공간 사용료를 지급하여 고정비 부담을 낮춥니다.', highlight: '건당 매출의 5% (외부 허용 시)', color: 'text-neon-400', bg: 'bg-slate-800' },

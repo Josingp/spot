@@ -20,6 +20,7 @@ export interface Trainer {
   available: boolean;
   rating: number;
   gymName: string; // Associated Gym
+  isSpotPro?: boolean; // True if freelancer (SPOT PRO), False if Center Trainer
   
   // Schedule
   weeklySchedule?: WeeklySchedule[];

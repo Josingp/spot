@@ -497,7 +497,7 @@ export const AdminApp: React.FC = () => {
                <div className="w-8 h-8 rounded-full bg-neon-400 flex items-center justify-center text-slate-900 font-bold">M</div>
                <div>
                   <div className="text-sm font-bold text-white">Manager</div>
-                  <div className="text-xs text-slate-500">스포애니 강남점</div>
+                  <div className="text-xs text-slate-500">SPOT 피트니스 강남본점</div>
                </div>
             </div>
             <div className="text-[10px] text-slate-500 mt-2 flex items-center">

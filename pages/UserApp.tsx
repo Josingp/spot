@@ -1,11 +1,12 @@
+
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, ChevronRight, Activity, Brain, Clock, Check, Navigation, User, Monitor, AlertCircle, LayoutGrid, Dumbbell, HeartPulse, Wallet, CreditCard, X, ArrowLeft, Loader2, Nfc, Siren } from 'lucide-react';
+import { Search, MapPin, ChevronRight, Activity, Brain, Clock, Check, Navigation, User, Monitor, AlertCircle, LayoutGrid, Dumbbell, HeartPulse, Wallet, CreditCard, X, ArrowLeft, Loader2, Nfc, Siren, Star } from 'lucide-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { getWorkoutRecommendation, Recommendation } from '../services/geminiService';
 import { Trainer, GymServiceItem } from '../types';
 import { DataStore } from '../utils/dataStore';
 
-type Step = 'gym_check' | 'home' | 'ai_chat' | 'location_input' | 'scanning' | 'booking_list' | 'booking_confirm' | 'wallet_charge' | 'nfc_confirm';
+type Step = 'gym_check' | 'home' | 'ai_chat' | 'location_input' | 'scanning' | 'booking_list' | 'booking_confirm' | 'wallet_charge';
 
 export const UserApp: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -17,9 +18,6 @@ export const UserApp: React.FC = () => {
   const [myLocationInGym, setMyLocationInGym] = useState('');
   const [walletBalance, setWalletBalance] = useState(0); 
   const [userName, setUserName] = useState('회원');
-  
-  // NFC Specific State
-  const [nfcLocation, setNfcLocation] = useState<string | null>(null);
   
   // Dynamic Data from DataStore (Admin Customization)
   const [trainers, setTrainers] = useState<Trainer[]>([]);
@@ -50,22 +48,7 @@ export const UserApp: React.FC = () => {
       setWalletBalance(session.balance || 25000); // Simulate pre-loaded balance from Kiosk
     }
 
-    // 2. CHECK FOR NFC TAG ENTRY
-    const nfcLoc = searchParams.get('nfc_location');
-    const nfcGym = searchParams.get('gym_id');
-
-    if (nfcLoc) {
-        // Direct NFC Mode
-        console.log("Entered via NFC Tag:", nfcLoc);
-        setNfcLocation(nfcLoc);
-        setMyLocationInGym(nfcLoc); // Auto-fill location
-        setCurrentGym(nfcGym || '스포애니 강남점');
-        setSelectedCategory('기구 사용법 티칭'); // Default category for NFC
-        setStep('nfc_confirm'); // Skip to special NFC View
-        return;
-    }
-
-    // 3. Normal Geolocation (Only if not NFC)
+    // 2. Normal Geolocation
     if (step === 'gym_check') {
       if (!navigator.geolocation) {
         setGeoError("Geolocation is not supported by this browser.");
@@ -76,21 +59,21 @@ export const UserApp: React.FC = () => {
         (position) => {
           console.log("Found location:", position.coords);
           setTimeout(() => {
-            setCurrentGym('스포애니 강남점');
+            setCurrentGym('SPOT 피트니스 강남본점');
             setStep('home');
           }, 1500);
         },
         (error) => {
           setGeoError("위치 정보를 가져올 수 없습니다. GPS를 켜주세요.");
           setTimeout(() => {
-            setCurrentGym('스포애니 강남점 (GPS 미수신)');
+            setCurrentGym('SPOT 피트니스 강남본점 (GPS 미수신)');
             setStep('home');
           }, 2000);
         },
         { timeout: 10000, enableHighAccuracy: true }
       );
     }
-  }, [step, searchParams]);
+  }, [step]);
 
   const handleStartBooking = (categoryName: string, detail?: string) => {
     setSelectedCategory(categoryName);
@@ -138,71 +121,6 @@ export const UserApp: React.FC = () => {
       }
     }
   };
-
-  // --- NFC Special View ---
-  const NfcConfirmView = () => (
-    <div className="flex flex-col h-screen bg-slate-950 p-6 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute top-0 left-0 w-full h-full z-0">
-             <div className="absolute top-[-10%] right-[-10%] w-[400px] h-[400px] bg-red-600/20 rounded-full blur-[100px] animate-pulse"></div>
-        </div>
-
-        <div className="relative z-10 flex flex-col h-full">
-             <div className="flex items-center space-x-2 text-red-500 mb-8 animate-fade-in">
-                 <Siren size={24} className="animate-pulse"/>
-                 <span className="font-bold uppercase tracking-wider text-sm">NFC Emergency Call</span>
-             </div>
-
-             <div className="flex-1 flex flex-col justify-center">
-                 <h1 className="text-3xl font-bold text-white mb-2">
-                    <span className="text-neon-400">{userName}</span>님,
-                 </h1>
-                 <h2 className="text-4xl font-black text-white mb-10 leading-tight">
-                    <span className="bg-red-600 px-2 text-white inline-block transform -skew-x-12">{nfcLocation}</span> 으로<br/>
-                    트레이너를 부를까요?
-                 </h2>
-
-                 <div className="bg-slate-900/80 border border-white/10 p-6 rounded-2xl mb-10 backdrop-blur-md">
-                     <div className="flex justify-between items-center mb-4">
-                        <span className="text-slate-400">내 크레딧 잔액</span>
-                        <span className="font-bold text-neon-400 text-xl">{walletBalance.toLocaleString()} P</span>
-                     </div>
-                     <div className="h-px bg-white/10 w-full mb-4"></div>
-                     <div className="flex justify-between items-center">
-                        <span className="text-slate-400">차감 예정</span>
-                        <span className="font-bold text-white">- 25,000 P</span>
-                     </div>
-                 </div>
-
-                 <button 
-                    onClick={() => {
-                        // Auto-select first available trainer for NFC speed
-                        const availableTrainer = trainers.find(t => t.available) || trainers[0];
-                        setSelectedTrainer(availableTrainer);
-                        handleBookingPayment();
-                    }}
-                    className="w-full bg-red-600 text-white py-6 rounded-2xl font-black text-2xl shadow-[0_0_40px_rgba(220,38,38,0.4)] hover:bg-red-500 transition-all active:scale-95 flex items-center justify-center group"
-                 >
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-white/30">
-                        <Nfc size={24} />
-                    </div>
-                    지금 호출하기
-                 </button>
-                 
-                 <button 
-                    onClick={() => {
-                        setStep('home');
-                        setNfcLocation(null);
-                        setMyLocationInGym('');
-                    }}
-                    className="mt-6 text-slate-500 text-sm font-medium underline text-center"
-                 >
-                    아니요, 메인 화면으로 갈게요
-                 </button>
-             </div>
-        </div>
-    </div>
-  );
 
   // --- Components ---
 
@@ -463,30 +381,31 @@ export const UserApp: React.FC = () => {
         <span className="inline-block bg-neon-400/10 border border-neon-400/20 text-neon-400 px-4 py-1.5 rounded-full text-sm font-bold">
             {selectedCategory}
         </span>
-        <h2 className="text-4xl font-extrabold text-white">어디로 갈까요?</h2>
-        <p className="text-lg text-slate-400">트레이너가 찾아갈 수 있게<br/>현재 계신 기구 이름이나 위치를 입력해주세요.</p>
+        <h2 className="text-4xl font-extrabold text-white">위치를 알려주세요</h2>
+        <p className="text-lg text-slate-400">
+            기구에 부착된 NFC를 태그하거나<br/>
+            현재 계신 위치를 직접 입력해주세요.
+        </p>
+      </div>
+
+      <div className="w-full max-w-md bg-slate-800/50 p-6 rounded-3xl border border-white/5 border-dashed flex flex-col items-center justify-center space-y-2 group cursor-pointer hover:bg-slate-800 hover:border-neon-500/50 transition-all">
+          <div className="w-14 h-14 bg-slate-700 rounded-full flex items-center justify-center text-slate-400 group-hover:text-neon-400 group-hover:scale-110 transition-all">
+              <Nfc size={24} />
+          </div>
+          <span className="text-sm font-bold text-slate-300">NFC 태그로 자동 입력</span>
       </div>
       
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md relative">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+             <MapPin size={20} className="text-slate-500" />
+          </div>
           <input 
             type="text" 
             value={myLocationInGym}
             onChange={(e) => setMyLocationInGym(e.target.value)}
             placeholder="예: 스쿼트 랙, 3번 런닝머신"
-            className="w-full p-6 text-center text-2xl border-2 border-slate-700 bg-slate-900 rounded-3xl focus:border-neon-400 focus:ring-0 outline-none text-white placeholder-slate-700 font-bold"
+            className="w-full p-6 pl-12 text-center text-xl border-2 border-slate-700 bg-slate-900 rounded-3xl focus:border-neon-400 focus:ring-0 outline-none text-white placeholder-slate-700 font-bold transition-colors"
           />
-      </div>
-
-      <div className="flex flex-wrap gap-2 justify-center max-w-sm">
-        {['프리웨이트 존', '유산소 존', '머신 존', '스트레칭 존', '스쿼트 랙'].map(zone => (
-            <button 
-                key={zone}
-                onClick={() => setMyLocationInGym(zone)}
-                className="py-2.5 px-4 bg-slate-800 border border-white/5 rounded-full text-sm text-slate-400 hover:border-neon-400 hover:text-neon-400 transition-colors"
-            >
-                {zone}
-            </button>
-        ))}
       </div>
 
       <button
@@ -557,7 +476,14 @@ export const UserApp: React.FC = () => {
               </div>
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-bold text-white text-xl">{trainer.name}</h4>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-bold text-white text-xl">{trainer.name}</h4>
+                    {trainer.isSpotPro && (
+                       <span className="text-[10px] bg-purple-500/20 text-purple-400 border border-purple-500/50 px-1.5 py-0.5 rounded font-bold flex items-center">
+                          <Star size={8} className="mr-0.5 fill-purple-400" /> SPOT PRO
+                       </span>
+                    )}
+                  </div>
                   {trainer.available ? (
                      <div className="text-slate-900 bg-neon-400 text-xs font-extrabold px-2.5 py-1 rounded-md flex items-center">
                         <Clock size={12} className="mr-1" /> {Math.floor(Math.random() * 3) + 1} MIN
@@ -568,7 +494,7 @@ export const UserApp: React.FC = () => {
                 </div>
                 <div className="text-slate-400 text-sm flex items-center mb-3">
                     <MapPin size={14} className="mr-1 text-slate-500" /> 
-                    {currentGym?.split(' ')[0] || '센터'}
+                    {trainer.isSpotPro ? 'SPOT 프리랜서' : currentGym?.split(' ')[0] || '센터'}
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xs bg-slate-800 border border-white/10 px-2.5 py-1 rounded text-slate-300">{trainer.specialty}</span>
@@ -655,7 +581,6 @@ export const UserApp: React.FC = () => {
           setAiQuery('');
           setAiRecommendation(null);
           setMyLocationInGym('');
-          setNfcLocation(null);
         }}
         className="mt-10 px-12 py-4 bg-slate-800 text-white rounded-xl font-bold hover:bg-slate-700 border border-white/10 transition-colors w-full max-w-sm"
       >
@@ -670,7 +595,6 @@ export const UserApp: React.FC = () => {
       {isPaymentProcessing && <PaymentModal />}
       
       {/* View Routing */}
-      {step === 'nfc_confirm' && <NfcConfirmView />} 
       {step === 'gym_check' && <GymCheckView />}
       {step === 'home' && <HomeView />}
       {step === 'wallet_charge' && <WalletChargeView />}

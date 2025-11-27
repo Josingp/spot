@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { LandingPage } from './pages/LandingPage';
 import { PartnerPage } from './pages/PartnerPage';
@@ -8,9 +8,21 @@ import { TrainerPromoPage } from './pages/TrainerPromoPage';
 import { UserApp } from './pages/UserApp';
 import { AdminApp } from './pages/AdminApp';
 import { LoginPage } from './pages/LoginPage';
-import { IRPage } from './pages/IRPage'; // Added import
+import { IRPage } from './pages/IRPage';
+import { NFCSimulationPage } from './pages/NFCSimulationPage'; 
 import { UserRole } from './types';
 import { DataStore } from './utils/dataStore';
+
+// ScrollToTop Component
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  
+  return null;
+};
 
 const App: React.FC = () => {
   // Global Auth State
@@ -35,6 +47,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route 
           path="/" 
@@ -75,6 +88,11 @@ const App: React.FC = () => {
               <IRPage />
             </Layout>
           } 
+        />
+        {/* Standalone Route for NFC Simulation */}
+        <Route 
+          path="/nfc-simulation" 
+          element={<NFCSimulationPage />} 
         />
         <Route 
           path="/user/*" 
